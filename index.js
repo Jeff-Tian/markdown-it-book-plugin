@@ -16,22 +16,18 @@ function updateChapterAndImageNumbers(state) {
                 if (childToken.type === 'image') {
                     currentImageNumberInCurrentChapter++;
 
-                    const alt = prepend(currentChapterNumber, currentImageNumberInCurrentChapter, childToken.content);
-                    const altIndex = childToken.attrIndex("alt");
+                    childToken.attrPush(['data-chapter-number', currentChapterNumber]);
+                    childToken.attrPush(['data-image-number', currentImageNumberInCurrentChapter]);
 
-                    if (altIndex >= 0) {
-                        childToken.attrs[altIndex][1] = alt;
-                    } else {
-                        childToken.attrs.push(["alt", alt]);
-                    }
+                    const modifiedAlt = prepend(currentChapterNumber, currentImageNumberInCurrentChapter, childToken.content);
+                    childToken.attrSet('alt', modifiedAlt);
 
-                    const titleIndex = childToken.attrIndex('title');
-                    if (titleIndex >= 0) {
-                        const title = prepend(currentChapterNumber, currentImageNumberInCurrentChapter, childToken.attrs[titleIndex][1]);
+                    childToken.attrSet('title', prepend(currentChapterNumber, currentImageNumberInCurrentChapter, childToken.attrGet('title') || childToken.content));
 
-                        childToken.attrs[titleIndex][1] = title
-                    } else {
-                        childToken.attrs.push(['title', alt]);
+                    childToken.content = modifiedAlt;
+
+                    if (childToken.children && childToken.children.length > 0 && childToken.children[0].type === 'text') {
+                        childToken.children[0].content = prepend(currentChapterNumber, currentImageNumberInCurrentChapter, childToken.children[0].content);
                     }
                 }
             }
@@ -40,7 +36,8 @@ function updateChapterAndImageNumbers(state) {
 }
 
 module.exports = function markdownItBook(md) {
-    md.core.ruler.push('update_chapter_and_image_numbers', updateChapterAndImageNumbers);
+    md.core.ruler.before('linkify', 'update_chapter_and_image_numbers', updateChapterAndImageNumbers);
+
     md.core.ruler.push('markdown-it-book-render', state => {
         md.renderer.rules.image = (tokens, idx, options, env, self) => {
             return self.renderToken(tokens, idx, options);

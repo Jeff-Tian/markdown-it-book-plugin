@@ -1684,6 +1684,11 @@ makeerror@1.0.12:
   dependencies:
     tmpl "1.0.5"
 
+markdown-it-implicit-figures@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/markdown-it-implicit-figures/-/markdown-it-implicit-figures-0.11.0.tgz#cb16879a2c7a9f5c160aafec39faf9e627a8a81c"
+  integrity sha512-ed32u3O8pTEM3TKgeBTMKw8ce86L8u5L41CuLvGee3yevYOq+1BoxjI84m/f7RcUaATcKgXTgZwieadvOH4afg==
+
 markdown-it@^13.0.1:
   version "13.0.1"
   resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-13.0.1.tgz#c6ecc431cacf1a5da531423fc6a42807814af430"

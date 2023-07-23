@@ -53,4 +53,26 @@ describe('update or append chapter and image numbers', () => {
         expect(md.render(inputMarkdown)).toBe(expectedOutput);
     });
 
+    test('should append chapter and image numbers to existing title', () => {
+        const inputMarkdown = `
+## Chapter 1
+
+![力](image1.png "地")
+
+![工](image2.png "土")
+
+## Chapter 2
+
+![要](image3.png "国")
+  `;
+
+        const expectedOutput = `<h2>Chapter 1</h2>
+<p><img src="image1.png" alt="图 1-1：力" title="图 1-1：地"></p>
+<p><img src="image2.png" alt="图 1-2：工" title="图 1-2：土"></p>
+<h2>Chapter 2</h2>
+<p><img src="image3.png" alt="图 2-1：要" title="图 2-1：国"></p>
+`;
+
+        expect(md.render(inputMarkdown)).toBe(expectedOutput);
+    });
 })

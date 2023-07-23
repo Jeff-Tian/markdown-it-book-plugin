@@ -1,3 +1,7 @@
+function prepend(currentChapterNumber, currentImageNumberInCurrentChapter, original) {
+    return `图 ${currentChapterNumber}-${currentImageNumberInCurrentChapter}` + (original !== '' ? ('：' + original) : '');
+}
+
 function updateChapterAndImageNumbers(state) {
     let currentChapterNumber = 0;
     let currentImageNumberInCurrentChapter = 0;
@@ -12,7 +16,7 @@ function updateChapterAndImageNumbers(state) {
                 if (childToken.type === 'image') {
                     currentImageNumberInCurrentChapter++;
 
-                    const alt = `图 ${currentChapterNumber}-${currentImageNumberInCurrentChapter}` + (childToken.content !== '' ? ('：' + childToken.content) : '');
+                    const alt = prepend(currentChapterNumber, currentImageNumberInCurrentChapter, childToken.content);
                     const altIndex = childToken.attrIndex("alt");
 
                     if (altIndex >= 0) {
@@ -21,7 +25,14 @@ function updateChapterAndImageNumbers(state) {
                         childToken.attrs.push(["alt", alt]);
                     }
 
-                    childToken.attrs.push(['title', alt]);
+                    const titleIndex = childToken.attrIndex('title');
+                    if (titleIndex >= 0) {
+                        const title = prepend(currentChapterNumber, currentImageNumberInCurrentChapter, childToken.attrs[titleIndex][1]);
+
+                        childToken.attrs[titleIndex][1] = title
+                    } else {
+                        childToken.attrs.push(['title', alt]);
+                    }
                 }
             }
         }

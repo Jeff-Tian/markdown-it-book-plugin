@@ -12,7 +12,7 @@ function updateChapterAndImageNumbers(state) {
                 if (childToken.type === 'image') {
                     currentImageNumberInCurrentChapter++;
 
-                    const alt = `图 ${currentChapterNumber}-${currentImageNumberInCurrentChapter}`;
+                    const alt = `图 ${currentChapterNumber}-${currentImageNumberInCurrentChapter}` + (childToken.content !== '' ? ('：' + childToken.content) : '');
                     const altIndex = childToken.attrIndex("alt");
 
                     if (altIndex >= 0) {
@@ -21,7 +21,7 @@ function updateChapterAndImageNumbers(state) {
                         childToken.attrs.push(["alt", alt]);
                     }
 
-                    childToken.attrs.push(['title', `图 ${currentChapterNumber}-${currentImageNumberInCurrentChapter}`]);
+                    childToken.attrs.push(['title', alt]);
                 }
             }
         }

@@ -1,5 +1,5 @@
 const MarkdownIt = require("markdown-it");
-const markdownItBook = require("./markdown-it-book");
+const markdownItBook = require("./index");
 
 // Initialize the MarkdownIt instance with the markdown-it-book plugin
 const md = new MarkdownIt().use(markdownItBook);

@@ -24,3 +24,28 @@ Table: some caption
 </tbody>
 </table>
 .
+
+no caption
+.
+| A | B | C |
+|---|---|---|
+| 1 | 2 | 3 |
+.
+<table>
+<caption>表 1-1</caption>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+.

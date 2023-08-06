@@ -71,14 +71,35 @@ module.exports = function markdownItBook(md) {
                         }
                     }
                 } else if (end = endOfTable(state, start)) { // test for caption after table
+                    currentNumberInCurrentChapter++
                     if (state.tokens.length > end + 1) {
                         const captionEnd = testParagraph(state, end + 1)
                         if (captionEnd) {
-                            currentNumberInCurrentChapter++
                             makeCaption(state, end + 1, captionEnd, currentChapterNumber, currentNumberInCurrentChapter)
                             const slice = state.tokens.splice(end + 1, captionEnd - end)
                             state.tokens.splice(start + 1, 0, ...slice)
                         }
+                    } else {
+                        // for no caption, insert one
+                        state.tokens.splice(1, 0,
+                            {content: '', nesting: 1, block: true},
+                            {
+                                content: '',
+                                nesting: 0,
+                                type: 'inline',
+                                level: 1,
+                                children: [],
+                                markup: '',
+                                info: '',
+                                block: true,
+                                map: [4, 5]
+                            },
+                            {
+                                content: '',
+                                nesting: -1,
+                                block: true
+                            })
+                        makeCaption(state, 1, 3, currentChapterNumber, currentNumberInCurrentChapter)
                     }
                 }
             }

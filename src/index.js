@@ -78,6 +78,27 @@ module.exports = function markdownItBook(md) {
                             makeCaption(state, end + 1, captionEnd, currentChapterNumber, currentNumberInCurrentChapter)
                             const slice = state.tokens.splice(end + 1, captionEnd - end)
                             state.tokens.splice(start + 1, 0, ...slice)
+                        } else {
+                            // for no caption, insert one
+                            state.tokens.splice(start + 1, 0,
+                                {content: '', nesting: 1, block: true},
+                                {
+                                    content: '',
+                                    nesting: 0,
+                                    type: 'inline',
+                                    level: 1,
+                                    children: [],
+                                    markup: '',
+                                    info: '',
+                                    block: true,
+                                    map: [4, 5]
+                                },
+                                {
+                                    content: '',
+                                    nesting: -1,
+                                    block: true
+                                })
+                            makeCaption(state, start + 1, start + 3, currentChapterNumber, currentNumberInCurrentChapter)
                         }
                     } else {
                         // for no caption, insert one

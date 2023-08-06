@@ -49,3 +49,34 @@ no caption
 </tbody>
 </table>
 .
+
+no caption within context around
+.
+### Some staff
+
+| A | B | C |
+|---|---|---|
+| 1 | 2 | 3 |
+
+Other staff
+.
+<h3>Some staff</h3>
+<table>
+<caption>表 1-1</caption>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>Other staff</p>
+.

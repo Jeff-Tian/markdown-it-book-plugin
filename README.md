@@ -18,11 +18,24 @@ yarn add markdown-it-book-plugin
 
 ## Usage
 
+### Basic:
+
 ```js
 const MarkdownIt = require("markdown-it");
 const md = new MarkdownIt();
 
 md.use(require('markdown-it-book-plugin'));
+```
+
+### Advanced with options
+
+```js
+const MarkdownIt = require("markdown-it");
+const md = new MarkdownIt();
+
+md.use(require('markdown-it-book-plugin'), {
+    mainCounterTag: 'h3'
+});
 ```
 
 More examples see

@@ -109,6 +109,39 @@ describe('markdown-it-book', () => {
                 expect(md.render(inputMarkdown)).toBe(expectedOutput);
             });
         })
+
+        describe('customize the heading open tag for counting chapters', () => {
+            test('should customize the heading open tag', () => {
+                const md = new MarkdownIt().use(markdownItBook, {
+                    mainCounterTag: 'h3'
+                });
+
+                const inputMarkdown = `
+### Chapter 1
+
+![力](image1.png "地")
+
+![工](image2.png "土")
+
+### Chapter 2
+
+![要](image3.png "国")
+  `;
+
+                const expectedOutput = `<h3>Chapter 1</h3>
+<figure><img src="image1.png" alt="图 1-1：力" title="图 1-1：地" data-chapter-number="1" data-image-number="1"><figcaption>图 1-1：力</figcaption></figure>
+<figure><img src="image2.png" alt="图 1-2：工" title="图 1-2：土" data-chapter-number="1" data-image-number="2"><figcaption>图 1-2：工</figcaption></figure>
+<h3>Chapter 2</h3>
+<figure><img src="image3.png" alt="图 2-1：要" title="图 2-1：国" data-chapter-number="2" data-image-number="1"><figcaption>图 2-1：要</figcaption></figure>
+`;
+
+                md.use(require('markdown-it-implicit-figures'), {
+                    figcaption: true
+                });
+
+                expect(md.render(inputMarkdown)).toBe(expectedOutput);
+            });
+        });
     })
 
     describe('table', () => {

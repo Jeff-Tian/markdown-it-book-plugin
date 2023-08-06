@@ -1,3 +1,5 @@
+const {testParagraph, endOfTable, makeCaption} = require("./table/table");
+
 function prepend(currentChapterNumber, currentImageNumberInCurrentChapter, original) {
     return `图 ${currentChapterNumber}-${currentImageNumberInCurrentChapter}` + (original !== '' ? ('：' + original) : '');
 }
@@ -42,5 +44,49 @@ module.exports = function markdownItBook(md) {
         md.renderer.rules.image = (tokens, idx, options, env, self) => {
             return self.renderToken(tokens, idx, options);
         }
+    })
+
+    md.core.ruler.after('block', 'book_table_captions', (state) => {
+        let currentChapterNumber = 1;
+        let currentNumberInCurrentChapter = 0;
+
+        let i = 0;
+        while (i < state.tokens.length) {
+            const start = i
+            const token = state.tokens[start]
+
+            let end
+            if (token.type === 'heading_open' && token.tag === 'h2') {
+                currentChapterNumber++;
+                currentNumberInCurrentChapter = 0;
+            } else {
+                if (end = testParagraph(state, start)) { // test for caption before table
+                    if (state.tokens.length > end + 1) {
+                        const after = state.tokens[end + 1]
+                        if (after.tag === 'table' && after.nesting === 1) {
+                            currentNumberInCurrentChapter++
+                            makeCaption(state, start, end, currentChapterNumber, currentNumberInCurrentChapter)
+                            const slice = state.tokens.splice(start, end + 1 - start)
+                            state.tokens.splice(start + 1, 0, ...slice)
+                        }
+                    }
+                } else if (end = endOfTable(state, start)) { // test for caption after table
+                    if (state.tokens.length > end + 1) {
+                        const captionEnd = testParagraph(state, end + 1)
+                        if (captionEnd) {
+                            currentNumberInCurrentChapter++
+                            makeCaption(state, end + 1, captionEnd, currentChapterNumber, currentNumberInCurrentChapter)
+                            const slice = state.tokens.splice(end + 1, captionEnd - end)
+                            state.tokens.splice(start + 1, 0, ...slice)
+                        }
+                    }
+                }
+            }
+
+
+            i = end || i + 1
+        }
+
+        return true
     })
 };

@@ -1,0 +1,26 @@
+simple caption below
+.
+| A | B | C |
+|---|---|---|
+| 1 | 2 | 3 |
+
+Table: some caption
+.
+<table>
+<caption>表 1-1：some caption</caption>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+.

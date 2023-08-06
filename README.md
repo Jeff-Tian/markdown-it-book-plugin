@@ -8,6 +8,7 @@
 
 - [x] Auto numbered images ![](./assets/images.png)
 - [x] Auto numbered tables ![](./assets/table.png)
+- [x] Auto numbered headings ![](./assets/chapter.png)
 - [ ] Auto numbered images made by mermaid source code
 
 ## Installation
@@ -34,7 +35,8 @@ const MarkdownIt = require("markdown-it");
 const md = new MarkdownIt();
 
 md.use(require('markdown-it-book-plugin'), {
-    mainCounterTag: 'h3'
+    mainCounterTag: 'h3',
+    updateMainCounter: true,
 });
 ```
 

@@ -149,4 +149,13 @@ describe('markdown-it-book', () => {
 
         generate(path.join(__dirname, 'fixtures/table/default.txt'), md);
     })
+
+    describe('chapter', () => {
+        const __dirname = path.dirname(__filename);
+
+        generate(path.join(__dirname, 'fixtures/chapter/default.txt'), new MarkdownIt().use(markdownItBook, {
+            mainCounterTag: 'h3',
+            updateMainCounter: true
+        }));
+    })
 })

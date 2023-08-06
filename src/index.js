@@ -1,4 +1,5 @@
 const {testParagraph, endOfTable, makeCaption} = require("./table/table");
+const {makeChapterNumber} = require("./chapter/chapter");
 
 function prepend(currentChapterNumber, currentImageNumberInCurrentChapter, original) {
     return `图 ${currentChapterNumber}-${currentImageNumberInCurrentChapter}` + (original !== '' ? ('：' + original) : '');
@@ -6,6 +7,7 @@ function prepend(currentChapterNumber, currentImageNumberInCurrentChapter, origi
 
 module.exports = function markdownItBook(md, options) {
     const mainCounterTag = options?.mainCounterTag || 'h2';
+    const updateMainCounter = options?.updateMainCounter || false;
 
     md.core.ruler.before('linkify', 'update_chapter_and_image_numbers', function (state) {
         let currentChapterNumber = 0;
@@ -131,4 +133,19 @@ module.exports = function markdownItBook(md, options) {
 
         return true
     })
+
+    if (updateMainCounter) {
+        md.core.ruler.after('block', 'book_chapters', (state) => {
+            let currentChapterNumber = 0;
+
+            for (const [index, token] of state.tokens.entries()) {
+                if (token.type === 'heading_open' && token.tag === mainCounterTag) {
+                    currentChapterNumber++;
+
+                    token.attrPush(['data-chapter-number', currentChapterNumber]);
+                    makeChapterNumber(state, token, index, currentChapterNumber);
+                }
+            }
+        })
+    }
 };

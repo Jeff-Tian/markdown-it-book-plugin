@@ -157,5 +157,10 @@ describe('markdown-it-book', () => {
             mainCounterTag: 'h3',
             updateMainCounter: true
         }));
+
+        generate(path.join(__dirname, 'fixtures/chapter/advanced.txt'), new MarkdownIt().use(markdownItBook, {
+            mainCounterTag: 'h3',
+            updateMainCounter: ['', ...Array.from({length: 100}, (_, index) => index + 1)],
+        }));
     })
 })

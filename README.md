@@ -30,6 +30,8 @@ md.use(require('markdown-it-book-plugin'));
 
 ### Advanced with options
 
+If you want to prepend the chapter number to the heading, you can use the following options:
+
 ```js
 const MarkdownIt = require("markdown-it");
 const md = new MarkdownIt();
@@ -39,6 +41,19 @@ md.use(require('markdown-it-book-plugin'), {
     updateMainCounter: true,
 });
 ```
+
+You can even customize the counter for each heading, for example, skip the first two chapters:
+
+```js
+const MarkdownIt = require("markdown-it");
+const md = new MarkdownIt();
+
+md.use(require('markdown-it-book-plugin'), {
+    mainCounterTag: 'h3',
+    updateMainCounter: ['', '', 1, 2, 3, 4],
+});
+```
+
 
 More examples see
 

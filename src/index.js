@@ -135,6 +135,8 @@ module.exports = function markdownItBook(md, options) {
     })
 
     if (updateMainCounter) {
+        const counters = typeof updateMainCounter === 'boolean' ? [] : updateMainCounter;
+
         md.core.ruler.after('block', 'book_chapters', (state) => {
             let currentChapterNumber = 0;
 
@@ -142,8 +144,10 @@ module.exports = function markdownItBook(md, options) {
                 if (token.type === 'heading_open' && token.tag === mainCounterTag) {
                     currentChapterNumber++;
 
-                    token.attrPush(['data-chapter-number', currentChapterNumber]);
-                    makeChapterNumber(state, token, index, currentChapterNumber);
+                    const chapterNumber = typeof updateMainCounter === 'boolean' ? currentChapterNumber : counters[currentChapterNumber - 1];
+
+                    token.attrPush(['data-chapter-number', chapterNumber]);
+                    makeChapterNumber(state, token, index, chapterNumber);
                 }
             }
         })

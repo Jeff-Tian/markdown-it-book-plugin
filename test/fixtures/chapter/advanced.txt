@@ -1,0 +1,10 @@
+advanced chapter counting
+.
+### 自序
+### 第一章标题
+### 第二章标题
+.
+<h3 data-chapter-number="">自序</h3>
+<h3 data-chapter-number="1">第 1 章：第一章标题</h3>
+<h3 data-chapter-number="2">第 2 章：第二章标题</h3>
+.

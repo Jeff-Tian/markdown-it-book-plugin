@@ -1,14 +1,5 @@
 module.exports = {
     makeChapterNumber: (state, token, index, currentChapterNumber) => {
-        state.tokens.splice(index + 1, 0, {
-            content: !!currentChapterNumber ? `第 ${currentChapterNumber} 章：` : '',
-            nesting: 0,
-            type: 'inline',
-            level: 1,
-            children: [],
-            markup: '',
-            info: '',
-            block: true,
-        })
+        state.tokens[index + 1].content = `${!!currentChapterNumber ? `第 ${currentChapterNumber} 章：` : ''}${state.tokens[index + 1].content}`;
     }
 }

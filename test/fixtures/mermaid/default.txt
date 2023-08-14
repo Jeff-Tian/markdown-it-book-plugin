@@ -1,0 +1,18 @@
+### Basic Mermaid
+.
+概念图如下：
+
+```mermaid
+graph LR
+    C --> B
+```
+.
+<p>概念图如下：</p>
+<figure>
+<pre><code data-chapter-number="0" data-image-number="1" class="language-mermaid">graph LR
+    C --&gt; B
+</code></pre>
+<figcaption>
+图 0-1</figcaption>
+</figure>
+.

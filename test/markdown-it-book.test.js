@@ -163,4 +163,13 @@ describe('markdown-it-book', () => {
             updateMainCounter: ['', ...Array.from({length: 100}, (_, index) => index + 1)],
         }));
     })
+
+    describe('mermaid', () => {
+        const __dirname = path.dirname(__filename);
+
+        generate(path.join(__dirname, 'fixtures/mermaid/default.txt'), new MarkdownIt().use(markdownItBook, {
+            mainCounterTag: 'h3',
+            updateMainCounter: true
+        }));
+    })
 })

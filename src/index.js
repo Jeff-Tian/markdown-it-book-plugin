@@ -1,5 +1,6 @@
 const {testParagraph, endOfTable, makeCaption} = require("./table/table");
 const {makeChapterNumber} = require("./chapter/chapter");
+const {makeMermaidCaption} = require("./mermaid/mermaid");
 
 function prepend(currentChapterNumber, currentImageNumberInCurrentChapter, original) {
     return `图 ${currentChapterNumber}-${currentImageNumberInCurrentChapter}` + (original !== '' ? ('：' + original) : '');
@@ -13,7 +14,9 @@ module.exports = function markdownItBook(md, options) {
         let currentChapterNumber = 0;
         let currentImageNumberInCurrentChapter = 0;
 
-        for (const token of state.tokens) {
+        for (let index = 0; index < state.tokens.length; index++) {
+            const token = state.tokens[index];
+
             if (token.type === 'heading_open' && token.tag === mainCounterTag) {
                 currentChapterNumber++;
                 currentImageNumberInCurrentChapter = 0;
@@ -38,6 +41,14 @@ module.exports = function markdownItBook(md, options) {
                         }
                     }
                 }
+            } else if (token.type === 'fence' && token.info === 'mermaid') {
+                console.log("hello')")
+                currentImageNumberInCurrentChapter++;
+
+                token.attrPush(['data-chapter-number', currentChapterNumber]);
+                token.attrPush(['data-image-number', currentImageNumberInCurrentChapter]);
+                const newTokensAdded = makeMermaidCaption(state, index, currentChapterNumber, currentImageNumberInCurrentChapter);
+                index += newTokensAdded;
             }
         }
     });

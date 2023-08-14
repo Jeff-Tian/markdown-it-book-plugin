@@ -102,7 +102,7 @@ describe('markdown-it-book', () => {
 <figure><img src="image3.png" alt="图 2-1：要" title="图 2-1：国" data-chapter-number="2" data-image-number="1"><figcaption>图 2-1：要</figcaption></figure>
 `;
 
-                md.use(require('markdown-it-implicit-figures'), {
+                md.use(require('@jeff-tian/markdown-it-implicit-figures'), {
                     figcaption: true
                 });
 
@@ -135,13 +135,24 @@ describe('markdown-it-book', () => {
 <figure><img src="image3.png" alt="图 2-1：要" title="图 2-1：国" data-chapter-number="2" data-image-number="1"><figcaption>图 2-1：要</figcaption></figure>
 `;
 
-                md.use(require('markdown-it-implicit-figures'), {
+                md.use(require('@jeff-tian/markdown-it-implicit-figures'), {
                     figcaption: true
                 });
 
                 expect(md.render(inputMarkdown)).toBe(expectedOutput);
             });
         });
+
+        const __dirname = path.dirname(__filename);
+
+        generate(
+            path.join(__dirname, 'fixtures/image/default.txt'),
+            new MarkdownIt()
+                .use(markdownItBook, {})
+                .use(require('@jeff-tian/markdown-it-implicit-figures'), {
+                    figcaption: true
+                })
+        );
     })
 
     describe('table', () => {

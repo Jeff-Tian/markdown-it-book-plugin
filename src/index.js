@@ -39,10 +39,13 @@ module.exports = function markdownItBook(md, options) {
                         if (childToken.children && childToken.children.length > 0 && childToken.children[0].type === 'text') {
                             childToken.children[0].content = prepend(currentChapterNumber, currentImageNumberInCurrentChapter, childToken.children[0].content);
                         }
+
+                        if (childToken.children && childToken.children.length <= 0) {
+                            childToken.children = [{type: 'text', content: modifiedAlt}]
+                        }
                     }
                 }
             } else if (token.type === 'fence' && token.info === 'mermaid') {
-                console.log("hello')")
                 currentImageNumberInCurrentChapter++;
 
                 token.attrPush(['data-chapter-number', currentChapterNumber]);

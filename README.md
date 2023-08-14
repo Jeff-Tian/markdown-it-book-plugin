@@ -9,7 +9,7 @@
 - [x] Auto numbered images ![](./assets/images.png)
 - [x] Auto numbered tables ![](./assets/table.png)
 - [x] Auto numbered headings ![](./assets/chapter.png)
-- [ ] Auto numbered images made by mermaid source code
+- [x] Auto numbered images made by mermaid source code
 
 ## Installation
 

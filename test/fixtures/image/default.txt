@@ -1,0 +1,7 @@
+### Empty alt
+
+.
+![](../../../resources/cypress-in-vpn.png)
+.
+<figure><img src="../../../resources/cypress-in-vpn.png" alt="图 0-1" data-chapter-number="0" data-image-number="1" title="图 0-1"><figcaption>图 0-1</figcaption></figure>
+.

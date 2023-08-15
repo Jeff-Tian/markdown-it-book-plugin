@@ -48,10 +48,10 @@ describe('markdown-it-book', () => {
   `;
 
                 const expectedOutput = `<h2>Chapter 1</h2>
-<p><img src="image1.png" alt="图 1-1：力" data-chapter-number="1" data-image-number="1" title="图 1-1：力"></p>
-<p><img src="image2.png" alt="图 1-2：工" data-chapter-number="1" data-image-number="2" title="图 1-2：工"></p>
+<p><img src="image1.png" alt="力" data-chapter-number="1" data-image-number="1" title="图 1-1：力"></p>
+<p><img src="image2.png" alt="工" data-chapter-number="1" data-image-number="2" title="图 1-2：工"></p>
 <h2>Chapter 2</h2>
-<p><img src="image3.png" alt="图 2-1：要" data-chapter-number="2" data-image-number="1" title="图 2-1：要"></p>
+<p><img src="image3.png" alt="要" data-chapter-number="2" data-image-number="1" title="图 2-1：要"></p>
 `;
 
                 expect(md.render(inputMarkdown)).toBe(expectedOutput);
@@ -71,10 +71,10 @@ describe('markdown-it-book', () => {
   `;
 
                 const expectedOutput = `<h2>Chapter 1</h2>
-<p><img src="image1.png" alt="图 1-1：力" title="图 1-1：地" data-chapter-number="1" data-image-number="1"></p>
-<p><img src="image2.png" alt="图 1-2：工" title="图 1-2：土" data-chapter-number="1" data-image-number="2"></p>
+<p><img src="image1.png" alt="力" title="图 1-1：地" data-chapter-number="1" data-image-number="1"></p>
+<p><img src="image2.png" alt="工" title="图 1-2：土" data-chapter-number="1" data-image-number="2"></p>
 <h2>Chapter 2</h2>
-<p><img src="image3.png" alt="图 2-1：要" title="图 2-1：国" data-chapter-number="2" data-image-number="1"></p>
+<p><img src="image3.png" alt="要" title="图 2-1：国" data-chapter-number="2" data-image-number="1"></p>
 `;
 
                 expect(md.render(inputMarkdown)).toBe(expectedOutput);
@@ -96,10 +96,10 @@ describe('markdown-it-book', () => {
   `;
 
                 const expectedOutput = `<h2>Chapter 1</h2>
-<figure><img src="image1.png" alt="图 1-1：力" title="图 1-1：地" data-chapter-number="1" data-image-number="1"><figcaption>图 1-1：力</figcaption></figure>
-<figure><img src="image2.png" alt="图 1-2：工" title="图 1-2：土" data-chapter-number="1" data-image-number="2"><figcaption>图 1-2：工</figcaption></figure>
+<figure><img src="image1.png" alt="力" title="图 1-1：地" data-chapter-number="1" data-image-number="1"><figcaption>图 1-1：力</figcaption></figure>
+<figure><img src="image2.png" alt="工" title="图 1-2：土" data-chapter-number="1" data-image-number="2"><figcaption>图 1-2：工</figcaption></figure>
 <h2>Chapter 2</h2>
-<figure><img src="image3.png" alt="图 2-1：要" title="图 2-1：国" data-chapter-number="2" data-image-number="1"><figcaption>图 2-1：要</figcaption></figure>
+<figure><img src="image3.png" alt="要" title="图 2-1：国" data-chapter-number="2" data-image-number="1"><figcaption>图 2-1：要</figcaption></figure>
 `;
 
                 md.use(require('@jeff-tian/markdown-it-implicit-figures'), {
@@ -129,10 +129,10 @@ describe('markdown-it-book', () => {
   `;
 
                 const expectedOutput = `<h3>Chapter 1</h3>
-<figure><img src="image1.png" alt="图 1-1：力" title="图 1-1：地" data-chapter-number="1" data-image-number="1"><figcaption>图 1-1：力</figcaption></figure>
-<figure><img src="image2.png" alt="图 1-2：工" title="图 1-2：土" data-chapter-number="1" data-image-number="2"><figcaption>图 1-2：工</figcaption></figure>
+<figure><img src="image1.png" alt="力" title="图 1-1：地" data-chapter-number="1" data-image-number="1"><figcaption>图 1-1：力</figcaption></figure>
+<figure><img src="image2.png" alt="工" title="图 1-2：土" data-chapter-number="1" data-image-number="2"><figcaption>图 1-2：工</figcaption></figure>
 <h3>Chapter 2</h3>
-<figure><img src="image3.png" alt="图 2-1：要" title="图 2-1：国" data-chapter-number="2" data-image-number="1"><figcaption>图 2-1：要</figcaption></figure>
+<figure><img src="image3.png" alt="要" title="图 2-1：国" data-chapter-number="2" data-image-number="1"><figcaption>图 2-1：要</figcaption></figure>
 `;
 
                 md.use(require('@jeff-tian/markdown-it-implicit-figures'), {

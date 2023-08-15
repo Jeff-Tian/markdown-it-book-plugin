@@ -22,7 +22,6 @@ module.exports = function markdownItBook(md, options) {
                 currentImageNumberInCurrentChapter = 0;
             } else if (token.type === 'inline' && token.children) {
                 for (const childToken of token.children) {
-
                     if (childToken.type === 'image') {
                         currentImageNumberInCurrentChapter++;
 
@@ -30,11 +29,15 @@ module.exports = function markdownItBook(md, options) {
                         childToken.attrPush(['data-image-number', currentImageNumberInCurrentChapter]);
 
                         const modifiedAlt = prepend(currentChapterNumber, currentImageNumberInCurrentChapter, childToken.content);
-                        childToken.attrSet('alt', modifiedAlt);
 
                         childToken.attrSet('title', prepend(currentChapterNumber, currentImageNumberInCurrentChapter, childToken.attrGet('title') || childToken.content));
 
-                        childToken.content = modifiedAlt;
+                        if (!childToken.content) {
+                            childToken.attrSet('alt', modifiedAlt);
+                            childToken.content = modifiedAlt;
+                        } else {
+                            childToken.attrSet('alt', childToken.content);
+                        }
 
                         if (childToken.children && childToken.children.length > 0 && childToken.children[0].type === 'text') {
                             childToken.children[0].content = prepend(currentChapterNumber, currentImageNumberInCurrentChapter, childToken.children[0].content);

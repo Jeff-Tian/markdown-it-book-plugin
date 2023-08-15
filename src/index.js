@@ -48,12 +48,12 @@ module.exports = function markdownItBook(md, options) {
                         }
                     }
                 }
-            } else if (token.type === 'fence' && token.info === 'mermaid') {
+            } else if (token.type === 'fence' && token.info.startsWith('mermaid')) {
                 currentImageNumberInCurrentChapter++;
 
                 token.attrPush(['data-chapter-number', currentChapterNumber]);
                 token.attrPush(['data-image-number', currentImageNumberInCurrentChapter]);
-                const newTokensAdded = makeMermaidCaption(state, index, currentChapterNumber, currentImageNumberInCurrentChapter);
+                const newTokensAdded = makeMermaidCaption(state, index, currentChapterNumber, currentImageNumberInCurrentChapter, token.info.split(' ')[1]);
                 index += newTokensAdded;
             }
         }

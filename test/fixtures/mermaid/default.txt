@@ -8,7 +8,27 @@ graph LR
 ```
 .
 <p>概念图如下：</p>
-<figure>
+<figure id="fig-0-1">
+<pre><code data-chapter-number="0" data-image-number="1" class="language-mermaid">graph LR
+    C --&gt; B
+</code></pre>
+<figcaption>
+图 0-1</figcaption>
+</figure>
+.
+
+
+### Mermaid with id
+.
+概念图如下：
+
+```mermaid test
+graph LR
+    C --> B
+```
+.
+<p>概念图如下：</p>
+<figure id="test">
 <pre><code data-chapter-number="0" data-image-number="1" class="language-mermaid">graph LR
     C --&gt; B
 </code></pre>

@@ -1,5 +1,5 @@
 const {testParagraph, endOfTable, makeCaption} = require("./table/table");
-const {makeChapterNumber} = require("./chapter/chapter");
+const {makeChapterNumber, makeSectionNumber} = require("./chapter/chapter");
 const {makeMermaidCaption} = require("./mermaid/mermaid");
 
 function prepend(currentChapterNumber, currentImageNumberInCurrentChapter, original) {
@@ -8,6 +8,7 @@ function prepend(currentChapterNumber, currentImageNumberInCurrentChapter, origi
 
 module.exports = function markdownItBook(md, options) {
     const mainCounterTag = options?.mainCounterTag || 'h2';
+    const sectionCounterTag = options?.sectionCounterTag;
     const updateMainCounter = options?.updateMainCounter || false;
 
     md.core.ruler.before('linkify', 'update_chapter_and_image_numbers', function (state) {
@@ -156,15 +157,28 @@ module.exports = function markdownItBook(md, options) {
 
         md.core.ruler.after('block', 'book_chapters', (state) => {
             let currentChapterNumber = 0;
+            let currentSectionNumber = 0;
 
             for (const [index, token] of state.tokens.entries()) {
                 if (token.type === 'heading_open' && token.tag === mainCounterTag) {
                     currentChapterNumber++;
+                    currentSectionNumber = 0;
 
                     const chapterNumber = typeof updateMainCounter === 'boolean' ? currentChapterNumber : counters[currentChapterNumber - 1];
 
                     token.attrPush(['data-chapter-number', chapterNumber]);
                     makeChapterNumber(state, token, index, chapterNumber);
+                }
+
+                if (!!sectionCounterTag && token.type === 'heading_open' && token.tag === sectionCounterTag) {
+                    currentSectionNumber++;
+
+                    const chapterNumber = typeof updateMainCounter === 'boolean' ? currentChapterNumber : counters[currentChapterNumber - 1];
+
+                    const sectionNumber = chapterNumber + '.' + currentSectionNumber;
+
+                    token.attrPush(['data-section-number', sectionNumber]);
+                    makeSectionNumber(state, token, index, sectionNumber);
                 }
             }
         })

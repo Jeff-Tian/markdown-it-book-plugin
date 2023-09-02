@@ -5,6 +5,7 @@ const generate = require("markdown-it-testgen");
 
 // Initialize the MarkdownIt instance with the markdown-it-book plugin
 const md = new MarkdownIt().use(markdownItBook);
+// const __dirname = path.dirname(__filename);
 
 describe('markdown-it-book', () => {
     describe('image', () => {
@@ -143,8 +144,6 @@ describe('markdown-it-book', () => {
             });
         });
 
-        const __dirname = path.dirname(__filename);
-
         generate(
             path.join(__dirname, 'fixtures/image/default.txt'),
             new MarkdownIt()
@@ -156,14 +155,10 @@ describe('markdown-it-book', () => {
     })
 
     describe('table', () => {
-        const __dirname = path.dirname(__filename);
-
         generate(path.join(__dirname, 'fixtures/table/default.txt'), md);
     })
 
     describe('chapter', () => {
-        const __dirname = path.dirname(__filename);
-
         generate(path.join(__dirname, 'fixtures/chapter/default.txt'), new MarkdownIt().use(markdownItBook, {
             mainCounterTag: 'h3',
             updateMainCounter: true
@@ -175,9 +170,15 @@ describe('markdown-it-book', () => {
         }));
     })
 
-    describe('mermaid', () => {
-        const __dirname = path.dirname(__filename);
+    describe('section', () => {
+        generate(path.join(__dirname, 'fixtures/section/default.txt'), new MarkdownIt().use(markdownItBook, {
+            mainCounterTag: 'h3',
+            sectionCounterTag: 'h4',
+            updateMainCounter: true
+        }));
+    })
 
+    describe('mermaid', () => {
         generate(path.join(__dirname, 'fixtures/mermaid/default.txt'), new MarkdownIt().use(markdownItBook, {
             mainCounterTag: 'h3',
             updateMainCounter: true

@@ -183,4 +183,21 @@ module.exports = function markdownItBook(md, options) {
             }
         })
     }
+
+    // Remember old renderer, if overridden, or proxy to default renderer
+    const defaultRender = md.renderer.rules.link_open || function (tokens, idx, options, env, self) {
+        return self.renderToken(tokens, idx, options);
+    };
+
+    md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
+        const idIndex = tokens[idx].attrIndex('id');
+        const titleIndex = tokens[idx].attrIndex('title');
+
+        if (idIndex < 0 && titleIndex >= 0) {
+            tokens[idx].attrPush(['id', tokens[idx].attrGet('title')]); // add new attribute
+        }
+
+        // pass token to default renderer.
+        return defaultRender(tokens, idx, options, env, self);
+    };
 };

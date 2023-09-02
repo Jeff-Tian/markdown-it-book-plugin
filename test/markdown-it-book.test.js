@@ -184,4 +184,8 @@ describe('markdown-it-book', () => {
             updateMainCounter: true
         }));
     })
+
+    describe('links', () => {
+        generate(path.join(__dirname, 'fixtures/links/default.txt'), new MarkdownIt().use(markdownItBook, {}));
+    })
 })

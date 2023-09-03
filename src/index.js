@@ -157,42 +157,47 @@ module.exports = function markdownItBook(md, options) {
     })
 
     // 给列表编号
-    md.core.ruler.after('inline', 'custom-lists', (state) => {
-        let processList = inlineListNumbering
-        let listDepth = 0; // 用于跟踪当前列表的深度
+    if (inlineListNumbering !== false) {
+        md.core.ruler.after('inline', 'custom-lists', (state) => {
+            let processList = inlineListNumbering
+            let listDepth = 0; // 用于跟踪当前列表的深度
 
-        state.tokens.forEach((token) => {
-            if (token.type === 'heading_open' && token.attrs) {
-                for (const [name, value] of token.attrs) {
-                    if (name === 'id' && value === 'book-reference') {
-                        processList = true
-                        break
+            state.tokens.forEach((token, index) => {
+                if (typeof inlineListNumbering === 'string') {
+                    if (token.type === 'heading_open') {
+                        const nextToken = state.tokens[index + 1];
+                        if (nextToken.type === 'inline' && nextToken.children && nextToken.children.length >= 1) {
+                            const [child] = nextToken.children;
+
+                            if (child.type === 'text' && child.content.startsWith(inlineListNumbering)) {
+                                processList = true;
+                            }
+                        }
                     }
                 }
-            }
 
-            if (processList && token.type === 'list_item_open' && token.markup === '.') {
-                listDepth++;
-            }
-
-            if (processList && token.type === 'inline') {
-                const text = token.content.trim()
-
-                if (text) {
-                    token.content = `${listDepth}. ${text}`; // 为列表项添加编号
-
-                    token.children.forEach((childToken) => {
-                        childToken.content = token.content
-                    })
+                if (processList && token.type === 'list_item_open' && token.markup === '.') {
+                    listDepth++;
                 }
-            }
 
-            // 如果遇到新的标题节点，则停止处理列表项
-            if (processList && token.type === 'heading_open') {
-                processList = false;
-            }
+                if (processList && listDepth > 0 && token.type === 'inline') {
+                    const text = token.content.trim()
+
+                    if (text) {
+                        token.content = `${listDepth}. ${text}`; // 为列表项添加编号
+
+                        token.children.forEach((childToken) => {
+                            childToken.content = token.content
+                        })
+                    }
+                }
+
+                if (processList && token.type === 'heading_open') {
+                    listDepth = 0
+                }
+            })
         })
-    })
+    }
 
     // 给章节编号
     if (updateMainCounter) {

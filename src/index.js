@@ -10,7 +10,9 @@ module.exports = function markdownItBook(md, options) {
     const mainCounterTag = options?.mainCounterTag || 'h2';
     const sectionCounterTag = options?.sectionCounterTag;
     const updateMainCounter = options?.updateMainCounter || false;
+    const inlineListNumbering = options?.inlineListNumbering || false;
 
+    // 给图片编号
     md.core.ruler.before('linkify', 'update_chapter_and_image_numbers', function (state) {
         let currentChapterNumber = 0;
         let currentImageNumberInCurrentChapter = 0;
@@ -65,7 +67,9 @@ module.exports = function markdownItBook(md, options) {
             return self.renderToken(tokens, idx, options);
         }
     })
+    // 给图片编号结束
 
+    // 给表格编号
     md.core.ruler.after('block', 'book_table_captions', (state) => {
         let currentChapterNumber = 1;
         let currentNumberInCurrentChapter = 0;
@@ -152,6 +156,45 @@ module.exports = function markdownItBook(md, options) {
         return true
     })
 
+    // 给列表编号
+    md.core.ruler.after('inline', 'custom-lists', (state) => {
+        let processList = inlineListNumbering
+        let listDepth = 0; // 用于跟踪当前列表的深度
+
+        state.tokens.forEach((token) => {
+            if (token.type === 'heading_open' && token.attrs) {
+                for (const [name, value] of token.attrs) {
+                    if (name === 'id' && value === 'book-reference') {
+                        processList = true
+                        break
+                    }
+                }
+            }
+
+            if (processList && token.type === 'list_item_open' && token.markup === '.') {
+                listDepth++;
+            }
+
+            if (processList && token.type === 'inline') {
+                const text = token.content.trim()
+
+                if (text) {
+                    token.content = `${listDepth}. ${text}`; // 为列表项添加编号
+
+                    token.children.forEach((childToken) => {
+                        childToken.content = token.content
+                    })
+                }
+            }
+
+            // 如果遇到新的标题节点，则停止处理列表项
+            if (processList && token.type === 'heading_open') {
+                processList = false;
+            }
+        })
+    })
+
+    // 给章节编号
     if (updateMainCounter) {
         const counters = typeof updateMainCounter === 'boolean' ? [] : updateMainCounter;
 
@@ -184,6 +227,7 @@ module.exports = function markdownItBook(md, options) {
         })
     }
 
+    // 给链接添加 id 属性（将 title 作为 id）
     // Remember old renderer, if overridden, or proxy to default renderer
     const defaultRender = md.renderer.rules.link_open || function (tokens, idx, options, env, self) {
         return self.renderToken(tokens, idx, options);
@@ -200,4 +244,5 @@ module.exports = function markdownItBook(md, options) {
         // pass token to default renderer.
         return defaultRender(tokens, idx, options, env, self);
     };
+    // 给链接添加 id 属性（将 title 作为 id）结束
 };

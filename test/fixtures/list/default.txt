@@ -1,0 +1,10 @@
+list feature
+.
+1. Open the Music app.
+2. Tap on the "Playlists" tab at the bottom of the screen.
+.
+<ol>
+<li>1. Open the Music app.</li>
+<li>2. Tap on the &quot;Playlists&quot; tab at the bottom of the screen.</li>
+</ol>
+.

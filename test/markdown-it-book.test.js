@@ -188,4 +188,10 @@ describe('markdown-it-book', () => {
     describe('links', () => {
         generate(path.join(__dirname, 'fixtures/links/default.txt'), new MarkdownIt().use(markdownItBook, {}));
     })
+
+    describe('list items', () => {
+        generate(path.join(__dirname, 'fixtures/list/default.txt'), new MarkdownIt().use(markdownItBook, {
+            inlineListNumbering: true
+        }));
+    })
 })

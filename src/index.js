@@ -1,5 +1,5 @@
 const {testParagraph, endOfTable, makeCaption} = require("./table/table");
-const {makeChapterNumber, makeSectionNumber} = require("./chapter/chapter");
+const {makeChapterNumber, makeSectionNumber, makeMinorSectionNumber} = require("./chapter/chapter");
 const {makeMermaidCaption} = require("./mermaid/mermaid");
 
 function prepend(currentChapterNumber, currentImageNumberInCurrentChapter, original) {
@@ -9,6 +9,7 @@ function prepend(currentChapterNumber, currentImageNumberInCurrentChapter, origi
 module.exports = function markdownItBook(md, options) {
     const mainCounterTag = options?.mainCounterTag || 'h2';
     const sectionCounterTag = options?.sectionCounterTag;
+    const minorSectionCounterTag = options?.minorSectionCounterTag;
     const updateMainCounter = options?.updateMainCounter || false;
     const inlineListNumbering = options?.inlineListNumbering || false;
 
@@ -205,6 +206,7 @@ module.exports = function markdownItBook(md, options) {
         md.core.ruler.after('block', 'book_chapters', (state) => {
             let currentChapterNumber = 0;
             let currentSectionNumber = 0;
+            let currentMinorSectionNumber = 0;
 
             for (const [index, token] of state.tokens.entries()) {
                 if (token.type === 'heading_open' && token.tag === mainCounterTag) {
@@ -219,6 +221,7 @@ module.exports = function markdownItBook(md, options) {
 
                 if (!!sectionCounterTag && token.type === 'heading_open' && token.tag === sectionCounterTag) {
                     currentSectionNumber++;
+                    currentMinorSectionNumber = 0;
 
                     const chapterNumber = typeof updateMainCounter === 'boolean' ? currentChapterNumber : counters[currentChapterNumber - 1];
 
@@ -226,6 +229,17 @@ module.exports = function markdownItBook(md, options) {
 
                     token.attrPush(['data-section-number', sectionNumber]);
                     makeSectionNumber(state, token, index, sectionNumber);
+                }
+
+                if (!!minorSectionCounterTag && token.type === 'heading_open' && token.tag === minorSectionCounterTag) {
+                    currentMinorSectionNumber++;
+
+                    const chapterNumber = typeof updateMainCounter === 'boolean' ? currentChapterNumber : counters[currentChapterNumber - 1];
+
+                    const minorSectionNumber = chapterNumber + '.' + currentSectionNumber + '.' + currentMinorSectionNumber;
+
+                    token.attrPush(['data-minor-section-number', minorSectionNumber]);
+                    makeMinorSectionNumber(state, token, index, minorSectionNumber);
                 }
             }
         })

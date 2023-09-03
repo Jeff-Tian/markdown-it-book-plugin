@@ -174,6 +174,7 @@ describe('markdown-it-book', () => {
         generate(path.join(__dirname, 'fixtures/section/default.txt'), new MarkdownIt().use(markdownItBook, {
             mainCounterTag: 'h3',
             sectionCounterTag: 'h4',
+            minorSectionCounterTag: 'h5',
             updateMainCounter: true
         }));
     })

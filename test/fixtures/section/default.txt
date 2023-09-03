@@ -8,9 +8,27 @@ basic section counting
 #### 第二节标题
 .
 <h3 data-chapter-number="1">第 1 章：第一章标题</h3>
-<h4 data-section-number="1.1">1.1：第一节标题</h4>
-<h4 data-section-number="1.2">1.2：第二节标题</h4>
+<h4 data-section-number="1.1">1.1 第一节标题</h4>
+<h4 data-section-number="1.2">1.2 第二节标题</h4>
 <h3 data-chapter-number="2">第 2 章：第二章标题</h3>
-<h4 data-section-number="2.1">2.1：第一节标题</h4>
-<h4 data-section-number="2.2">2.2：第二节标题</h4>
+<h4 data-section-number="2.1">2.1 第一节标题</h4>
+<h4 data-section-number="2.2">2.2 第二节标题</h4>
+.
+counting nested sections
+.
+### 第一章标题
+#### 第一节标题
+##### 第一小节标题
+#### 第二节标题
+### 第二章标题
+#### 第一节标题
+#### 第二节标题
+.
+<h3 data-chapter-number="1">第 1 章：第一章标题</h3>
+<h4 data-section-number="1.1">1.1 第一节标题</h4>
+<h5 data-minor-section-number="1.1.1">1.1.1 第一小节标题</h5>
+<h4 data-section-number="1.2">1.2 第二节标题</h4>
+<h3 data-chapter-number="2">第 2 章：第二章标题</h3>
+<h4 data-section-number="2.1">2.1 第一节标题</h4>
+<h4 data-section-number="2.2">2.2 第二节标题</h4>
 .

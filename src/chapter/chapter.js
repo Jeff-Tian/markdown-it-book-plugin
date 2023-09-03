@@ -4,6 +4,10 @@ module.exports = {
     },
 
     makeSectionNumber: (state, token, index, currentSectionNumber) => {
-        state.tokens[index + 1].content = `${!!currentSectionNumber ? `${currentSectionNumber}：` : ''}${state.tokens[index + 1].content}`;
+        state.tokens[index + 1].content = `${!!currentSectionNumber ? `${currentSectionNumber} ` : ''}${state.tokens[index + 1].content}`;
+    },
+
+    makeMinorSectionNumber: (state, token, index, currentMinorSectionNumber) => {
+        state.tokens[index + 1].content = `${!!currentMinorSectionNumber ? `${currentMinorSectionNumber} ` : ''}${state.tokens[index + 1].content}`;
     }
 }

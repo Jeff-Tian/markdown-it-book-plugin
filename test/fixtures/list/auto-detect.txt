@@ -10,3 +10,22 @@ list feature
 <li>2. Tap on the &quot;Playlists&quot; tab at the bottom of the screen.</li>
 </ol>
 .
+真实案例
+.
+## 参考书目
+
+1. Simon Moffatt《Consumer Identity & Access Management Design Fundamentals》
+2. 王新栋《OAuth 2.0
+   实战课》https://time.geekbang.org/column/intro/100053901
+3. 周志明《周志明的软件架构课》 https://time.geekbang.org/column/article/329954
+4. https://link.springer.com/article/10.1007/s10707-020-00407-w
+.
+<h2>参考书目</h2>
+<ol>
+<li>1. Simon Moffatt《Consumer Identity &amp; Access Management Design Fundamentals》</li>
+<li>2. 王新栋《OAuth 2.0
+实战课》https://time.geekbang.org/column/intro/100053901</li>
+<li>3. 周志明《周志明的软件架构课》 https://time.geekbang.org/column/article/329954</li>
+<li>4. https://link.springer.com/article/10.1007/s10707-020-00407-w</li>
+</ol>
+.

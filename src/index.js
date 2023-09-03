@@ -186,9 +186,8 @@ module.exports = function markdownItBook(md, options) {
                     if (text) {
                         token.content = `${listDepth}. ${text}`; // 为列表项添加编号
 
-                        token.children.forEach((childToken) => {
-                            childToken.content = token.content
-                        })
+                        const [firstChild] = token.children;
+                        firstChild.content = `${listDepth}. ${firstChild.content}`;
                     }
                 }
 

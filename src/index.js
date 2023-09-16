@@ -177,11 +177,11 @@ module.exports = function markdownItBook(md, options) {
                     }
                 }
 
-                if (processList && token.type === 'list_item_open' && token.markup === '.') {
+                if (processList === true && token.type === 'list_item_open' && token.markup === '.') {
                     listDepth++;
                 }
 
-                if (processList && listDepth > 0 && token.type === 'inline') {
+                if (processList === true && listDepth > 0 && token.type === 'inline') {
                     const text = token.content.trim()
 
                     if (text) {
@@ -192,7 +192,7 @@ module.exports = function markdownItBook(md, options) {
                     }
                 }
 
-                if (processList && token.type === 'heading_open') {
+                if (processList === true && token.type === 'heading_open') {
                     listDepth = 0
                 }
             })

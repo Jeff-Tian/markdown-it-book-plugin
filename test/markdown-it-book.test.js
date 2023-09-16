@@ -198,5 +198,9 @@ describe('markdown-it-book', () => {
         generate(path.join(__dirname, 'fixtures/list/auto-detect.txt'), new MarkdownIt().use(markdownItBook, {
             inlineListNumbering: '参考书目'
         }));
+
+        generate(path.join(__dirname, 'fixtures/list/negative.txt'), new MarkdownIt().use(markdownItBook, {
+            inlineListNumbering: '参考书目'
+        }));
     })
 })

@@ -16,7 +16,7 @@ module.exports = function markdownItBook(md, options) {
     // 给图片编号
     md.core.ruler.before('linkify', 'update_chapter_and_image_numbers', function (state) {
         const counters = typeof updateMainCounter === 'boolean' ? [] : updateMainCounter;
-        
+
         let currentChapterNumber = 0;
         let currentImageNumberInCurrentChapter = 0;
 
@@ -31,7 +31,7 @@ module.exports = function markdownItBook(md, options) {
                     if (childToken.type === 'image') {
                         currentImageNumberInCurrentChapter++;
 
-                        const chapterNumber = typeof updateMainCounter === 'boolean' ? currentChapterNumber : counters[currentChapterNumber - 2];
+                        const chapterNumber = typeof updateMainCounter === 'boolean' ? currentChapterNumber : counters[currentChapterNumber - 1];
 
 
                         childToken.attrPush(['data-chapter-number', chapterNumber]);
@@ -60,7 +60,7 @@ module.exports = function markdownItBook(md, options) {
             } else if (token.type === 'fence' && token.info.startsWith('mermaid')) {
                 currentImageNumberInCurrentChapter++;
 
-                const chapterNumber = typeof updateMainCounter === 'boolean' ? currentChapterNumber : counters[currentChapterNumber - 2];
+                const chapterNumber = typeof updateMainCounter === 'boolean' ? currentChapterNumber : counters[currentChapterNumber - 1];
 
                 token.attrPush(['data-chapter-number', chapterNumber]);
                 token.attrPush(['data-image-number', currentImageNumberInCurrentChapter]);

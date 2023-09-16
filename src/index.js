@@ -15,6 +15,8 @@ module.exports = function markdownItBook(md, options) {
 
     // 给图片编号
     md.core.ruler.before('linkify', 'update_chapter_and_image_numbers', function (state) {
+        const counters = typeof updateMainCounter === 'boolean' ? [] : updateMainCounter;
+        
         let currentChapterNumber = 0;
         let currentImageNumberInCurrentChapter = 0;
 
@@ -29,12 +31,15 @@ module.exports = function markdownItBook(md, options) {
                     if (childToken.type === 'image') {
                         currentImageNumberInCurrentChapter++;
 
-                        childToken.attrPush(['data-chapter-number', currentChapterNumber]);
+                        const chapterNumber = typeof updateMainCounter === 'boolean' ? currentChapterNumber : counters[currentChapterNumber - 2];
+
+
+                        childToken.attrPush(['data-chapter-number', chapterNumber]);
                         childToken.attrPush(['data-image-number', currentImageNumberInCurrentChapter]);
 
-                        const modifiedAlt = prepend(currentChapterNumber, currentImageNumberInCurrentChapter, childToken.content);
+                        const modifiedAlt = prepend(chapterNumber, currentImageNumberInCurrentChapter, childToken.content);
 
-                        childToken.attrSet('title', prepend(currentChapterNumber, currentImageNumberInCurrentChapter, childToken.attrGet('title') || childToken.content));
+                        childToken.attrSet('title', prepend(chapterNumber, currentImageNumberInCurrentChapter, childToken.attrGet('title') || childToken.content));
 
                         if (!childToken.content) {
                             childToken.attrSet('alt', modifiedAlt);
@@ -44,7 +49,7 @@ module.exports = function markdownItBook(md, options) {
                         }
 
                         if (childToken.children && childToken.children.length > 0 && childToken.children[0].type === 'text') {
-                            childToken.children[0].content = prepend(currentChapterNumber, currentImageNumberInCurrentChapter, childToken.children[0].content);
+                            childToken.children[0].content = prepend(chapterNumber, currentImageNumberInCurrentChapter, childToken.children[0].content);
                         }
 
                         if (childToken.children && childToken.children.length <= 0) {
@@ -55,9 +60,11 @@ module.exports = function markdownItBook(md, options) {
             } else if (token.type === 'fence' && token.info.startsWith('mermaid')) {
                 currentImageNumberInCurrentChapter++;
 
-                token.attrPush(['data-chapter-number', currentChapterNumber]);
+                const chapterNumber = typeof updateMainCounter === 'boolean' ? currentChapterNumber : counters[currentChapterNumber - 2];
+
+                token.attrPush(['data-chapter-number', chapterNumber]);
                 token.attrPush(['data-image-number', currentImageNumberInCurrentChapter]);
-                const newTokensAdded = makeMermaidCaption(state, index, currentChapterNumber, currentImageNumberInCurrentChapter, token.info.split(' ')[1]);
+                const newTokensAdded = makeMermaidCaption(state, index, chapterNumber, currentImageNumberInCurrentChapter, token.info.split(' ')[1]);
                 index += newTokensAdded;
             }
         }
@@ -93,7 +100,7 @@ module.exports = function markdownItBook(md, options) {
                         if (after.tag === 'table' && after.nesting === 1) {
                             currentNumberInCurrentChapter++
 
-                            const chapterNumber = typeof updateMainCounter === 'boolean' ? currentChapterNumber : counters[currentChapterNumber - 1];
+                            const chapterNumber = typeof updateMainCounter === 'boolean' ? currentChapterNumber : counters[currentChapterNumber - 2];
 
                             makeCaption(state, start, end, chapterNumber, currentNumberInCurrentChapter)
                             const slice = state.tokens.splice(start, end + 1 - start)
@@ -102,10 +109,12 @@ module.exports = function markdownItBook(md, options) {
                     }
                 } else if (end = endOfTable(state, start)) { // test for caption after table
                     currentNumberInCurrentChapter++
+
+                    const chapterNumber = typeof updateMainCounter === 'boolean' ? currentChapterNumber : counters[currentChapterNumber - 2];
+
                     if (state.tokens.length > end + 1) {
                         const captionEnd = testParagraph(state, end + 1)
                         if (captionEnd) {
-                            const chapterNumber = typeof updateMainCounter === 'boolean' ? currentChapterNumber : counters[currentChapterNumber - 1];
 
                             makeCaption(state, end + 1, captionEnd, chapterNumber, currentNumberInCurrentChapter)
                             const slice = state.tokens.splice(end + 1, captionEnd - end)
@@ -131,8 +140,6 @@ module.exports = function markdownItBook(md, options) {
                                     block: true
                                 })
 
-                            const chapterNumber = typeof updateMainCounter === 'boolean' ? currentChapterNumber : counters[currentChapterNumber - 1];
-
                             makeCaption(state, start + 1, start + 3, chapterNumber, currentNumberInCurrentChapter)
                         }
                     } else {
@@ -156,7 +163,6 @@ module.exports = function markdownItBook(md, options) {
                                 block: true
                             })
 
-                        const chapterNumber = typeof updateMainCounter === 'boolean' ? currentChapterNumber : counters[currentChapterNumber - 1];
                         makeCaption(state, 1, 3, chapterNumber, currentNumberInCurrentChapter)
                     }
                 }

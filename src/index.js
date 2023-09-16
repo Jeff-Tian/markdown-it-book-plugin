@@ -72,6 +72,8 @@ module.exports = function markdownItBook(md, options) {
 
     // 给表格编号
     md.core.ruler.after('block', 'book_table_captions', (state) => {
+        const counters = typeof updateMainCounter === 'boolean' ? [] : updateMainCounter;
+
         let currentChapterNumber = 1;
         let currentNumberInCurrentChapter = 0;
 
@@ -90,7 +92,10 @@ module.exports = function markdownItBook(md, options) {
                         const after = state.tokens[end + 1]
                         if (after.tag === 'table' && after.nesting === 1) {
                             currentNumberInCurrentChapter++
-                            makeCaption(state, start, end, currentChapterNumber, currentNumberInCurrentChapter)
+
+                            const chapterNumber = typeof updateMainCounter === 'boolean' ? currentChapterNumber : counters[currentChapterNumber - 1];
+
+                            makeCaption(state, start, end, chapterNumber, currentNumberInCurrentChapter)
                             const slice = state.tokens.splice(start, end + 1 - start)
                             state.tokens.splice(start + 1, 0, ...slice)
                         }
@@ -100,7 +105,9 @@ module.exports = function markdownItBook(md, options) {
                     if (state.tokens.length > end + 1) {
                         const captionEnd = testParagraph(state, end + 1)
                         if (captionEnd) {
-                            makeCaption(state, end + 1, captionEnd, currentChapterNumber, currentNumberInCurrentChapter)
+                            const chapterNumber = typeof updateMainCounter === 'boolean' ? currentChapterNumber : counters[currentChapterNumber - 1];
+
+                            makeCaption(state, end + 1, captionEnd, chapterNumber, currentNumberInCurrentChapter)
                             const slice = state.tokens.splice(end + 1, captionEnd - end)
                             state.tokens.splice(start + 1, 0, ...slice)
                         } else {
@@ -123,7 +130,10 @@ module.exports = function markdownItBook(md, options) {
                                     nesting: -1,
                                     block: true
                                 })
-                            makeCaption(state, start + 1, start + 3, currentChapterNumber, currentNumberInCurrentChapter)
+
+                            const chapterNumber = typeof updateMainCounter === 'boolean' ? currentChapterNumber : counters[currentChapterNumber - 1];
+
+                            makeCaption(state, start + 1, start + 3, chapterNumber, currentNumberInCurrentChapter)
                         }
                     } else {
                         // for no caption, insert one
@@ -145,7 +155,9 @@ module.exports = function markdownItBook(md, options) {
                                 nesting: -1,
                                 block: true
                             })
-                        makeCaption(state, 1, 3, currentChapterNumber, currentNumberInCurrentChapter)
+
+                        const chapterNumber = typeof updateMainCounter === 'boolean' ? currentChapterNumber : counters[currentChapterNumber - 1];
+                        makeCaption(state, 1, 3, chapterNumber, currentNumberInCurrentChapter)
                     }
                 }
             }

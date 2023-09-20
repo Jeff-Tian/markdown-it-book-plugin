@@ -57,7 +57,7 @@ module.exports = function markdownItBook(md, options) {
                         }
                     }
                 }
-            } else if (token.type === 'fence' && token.info.startsWith('mermaid')) {
+            } else if (token.type === 'fence' && (token.info.startsWith('mermaid') || token.info.startsWith('plantuml'))) {
                 currentImageNumberInCurrentChapter++;
 
                 const chapterNumber = typeof updateMainCounter === 'boolean' ? currentChapterNumber : counters[currentChapterNumber - 1];

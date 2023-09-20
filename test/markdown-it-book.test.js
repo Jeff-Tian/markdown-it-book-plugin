@@ -186,6 +186,13 @@ describe('markdown-it-book', () => {
         }));
     })
 
+    describe('plantuml', () => {
+        generate(path.join(__dirname, 'fixtures/plantuml/default.txt'), new MarkdownIt().use(markdownItBook, {
+            mainCounterTag: 'h3',
+            updateMainCounter: true
+        }));
+    })
+
     describe('links', () => {
         generate(path.join(__dirname, 'fixtures/links/default.txt'), new MarkdownIt().use(markdownItBook, {}));
     })

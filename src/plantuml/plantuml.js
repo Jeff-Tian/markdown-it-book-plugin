@@ -3,7 +3,7 @@ module.exports = {
         const deflate = require('./lib/deflate')
 
         const zippedCode = deflate.encode64(deflate.zip_deflate(
-            decodeURIComponent(encodeURIComponent(
+            unescape(encodeURIComponent(
                 `@startuml\n${token.content}@enduml`
             )), 9
         ))

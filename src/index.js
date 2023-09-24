@@ -82,7 +82,7 @@ module.exports = function markdownItBook(md, options) {
 
     md.core.ruler.push('markdown-it-book-render', state => {
         md.renderer.rules.image = (tokens, idx, options, env, self) => {
-            return self.renderToken(tokens, idx, options);
+            return self.renderToken(tokens, idx, options, env, self);
         }
     })
     // 给图片编号结束

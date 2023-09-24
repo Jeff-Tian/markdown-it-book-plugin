@@ -8,9 +8,7 @@ Alice -> Bob: Hello
 .
 <p>概念图如下：</p>
 <figure id="fig-0-1">
-@startuml
-Alice -> Bob: Hello
-@enduml
+<img src="https://www.plantuml.com/plantuml/png/KpKnA2v9B2efpSrHDN1qpCbCJbKrCj1LDNO5KaxvIQh6Za26HsfEJZvGNjN483Kl1QWM0000" alt="plantuml" />
 <figcaption>
 图 0-1</figcaption>
 </figure>
@@ -25,9 +23,7 @@ Alice -> Bob: Hello
 .
 <p>概念图如下：</p>
 <figure id="test-id">
-@startuml
-Alice -> Bob: Hello
-@enduml
+<img src="https://www.plantuml.com/plantuml/png/KpKnA2v9B2efpSrHDN1qpCbCJbKrCj1LDNO5KaxvIQh6Za26HsfEJZvGNjN483Kl1QWM0000" alt="plantuml test-id" />
 <figcaption>
 图 0-1</figcaption>
 </figure>
@@ -42,9 +38,7 @@ Alice -> Bob: Hello
 .
 <p>概念图如下：</p>
 <figure id="test-id">
-@startuml
-Alice -> Bob: Hello
-@enduml
+<img src="https://www.plantuml.com/plantuml/png/KpKnA2v9B2efpSrHDN1qpCbCJbKrCj1LDNO5KaxvIQh6Za26HsfEJZvGNjN483Kl1QWM0000" alt="plantuml test-id test-title" />
 <figcaption>
 图 0-1：test-title</figcaption>
 </figure>

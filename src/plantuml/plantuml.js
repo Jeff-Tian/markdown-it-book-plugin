@@ -7,6 +7,6 @@ module.exports = {
                 `@startuml\n${token.content}@enduml`
             )), 9
         ))
-        return `<img src="https://www.plantuml.com/plantuml/png/${zippedCode}" alt="${token.info}" />\n`;
+        return `<img src="https://www.plantuml.com/plantuml/svg/${zippedCode}" alt="${token.info}" />\n`;
     }
 }

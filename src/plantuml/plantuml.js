@@ -3,9 +3,9 @@ module.exports = {
         const deflate = require('./lib/deflate')
 
         const zippedCode = deflate.encode64(deflate.zip_deflate(
-            encodeURIComponent(
+            decodeURIComponent(encodeURIComponent(
                 `@startuml\n${token.content}@enduml`
-            ), 9
+            )), 9
         ))
         return `<img src="https://www.plantuml.com/plantuml/png/${zippedCode}" alt="${token.info}" />\n`;
     }

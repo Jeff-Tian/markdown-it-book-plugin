@@ -1,6 +1,7 @@
 const {testParagraph, endOfTable, makeCaption} = require("./table/table");
 const {makeChapterNumber, makeSectionNumber, makeMinorSectionNumber} = require("./chapter/chapter");
 const {makeMermaidCaption} = require("./mermaid/mermaid");
+const {fencePlantuml} = require("./plantuml/plantuml");
 
 function prepend(currentChapterNumber, currentImageNumberInCurrentChapter, original) {
     return `图 ${currentChapterNumber}-${currentImageNumberInCurrentChapter}` + (original !== '' ? ('：' + original) : '');
@@ -290,4 +291,16 @@ module.exports = function markdownItBook(md, options) {
         return defaultRender(tokens, idx, options, env, self);
     };
     // 给链接添加 id 属性（将 title 作为 id）结束
+
+    // plantuml
+    const fence = md.renderer.rules.fence.bind(md.renderer.rules);
+    md.renderer.rules.fence = (tokens, index, options, env, slf) => {
+        const token = tokens[index];
+
+        if (token.info.startsWith('plantuml')) {
+            return fencePlantuml(tokens, token, index, options, env, slf);
+        }
+
+        return fence(tokens, index, options, env, slf);
+    };
 };

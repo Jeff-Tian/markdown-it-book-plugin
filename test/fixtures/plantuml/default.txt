@@ -8,8 +8,9 @@ Alice -> Bob: Hello
 .
 <p>概念图如下：</p>
 <figure id="fig-0-1">
-<pre><code data-chapter-number="0" data-image-number="1" class="language-plantuml">Alice -&gt; Bob: Hello
-</code></pre>
+@startuml
+Alice -> Bob: Hello
+@enduml
 <figcaption>
 图 0-1</figcaption>
 </figure>
@@ -24,8 +25,9 @@ Alice -> Bob: Hello
 .
 <p>概念图如下：</p>
 <figure id="test-id">
-<pre><code data-chapter-number="0" data-image-number="1" class="language-plantuml">Alice -&gt; Bob: Hello
-</code></pre>
+@startuml
+Alice -> Bob: Hello
+@enduml
 <figcaption>
 图 0-1</figcaption>
 </figure>
@@ -40,8 +42,9 @@ Alice -> Bob: Hello
 .
 <p>概念图如下：</p>
 <figure id="test-id">
-<pre><code data-chapter-number="0" data-image-number="1" class="language-plantuml">Alice -&gt; Bob: Hello
-</code></pre>
+@startuml
+Alice -> Bob: Hello
+@enduml
 <figcaption>
 图 0-1：test-title</figcaption>
 </figure>

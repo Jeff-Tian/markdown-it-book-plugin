@@ -1,4 +1,4 @@
-function makeMermaidCaption(state, index, currentChapterNumber, currentImageNumberInCurrentChapter, id) {
+function makeMermaidCaption(state, index, currentChapterNumber, currentImageNumberInCurrentChapter, id, title) {
     const figureOpen = new state.Token('figure_open', 'figure', 1);
     figureOpen.block = true;
     figureOpen.attrPush(['id', id || `fig-${currentChapterNumber}-${currentImageNumberInCurrentChapter}`]);
@@ -12,7 +12,9 @@ function makeMermaidCaption(state, index, currentChapterNumber, currentImageNumb
     figcaptionOpen.block = true;
     const figcaption = new state.Token('text', '', 0);
     figcaption.block = true;
-    figcaption.content = `图 ${currentChapterNumber}-${currentImageNumberInCurrentChapter}`;
+
+    const numberOfFigure = `图 ${currentChapterNumber}-${currentImageNumberInCurrentChapter}`;
+    figcaption.content = !title ? numberOfFigure : `${numberOfFigure}：${title}`;
     const figcaptionEnd = new state.Token('figcaption_close', 'figcaption', -1);
     figcaptionEnd.block = true;
     state.tokens.splice(index + 2, 0, figcaptionOpen, figcaption, figcaptionEnd);

@@ -14,3 +14,35 @@ Alice -> Bob: Hello
 图 0-1</figcaption>
 </figure>
 .
+### custom id
+.
+概念图如下：
+
+```plantuml test-id
+Alice -> Bob: Hello
+```
+.
+<p>概念图如下：</p>
+<figure id="test-id">
+<pre><code data-chapter-number="0" data-image-number="1" class="language-plantuml">Alice -&gt; Bob: Hello
+</code></pre>
+<figcaption>
+图 0-1</figcaption>
+</figure>
+.
+### custom title
+.
+概念图如下：
+
+```plantuml test-id test-title
+Alice -> Bob: Hello
+```
+.
+<p>概念图如下：</p>
+<figure id="test-id">
+<pre><code data-chapter-number="0" data-image-number="1" class="language-plantuml">Alice -&gt; Bob: Hello
+</code></pre>
+<figcaption>
+图 0-1：test-title</figcaption>
+</figure>
+.

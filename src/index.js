@@ -64,7 +64,16 @@ module.exports = function markdownItBook(md, options) {
 
                 token.attrPush(['data-chapter-number', chapterNumber]);
                 token.attrPush(['data-image-number', currentImageNumberInCurrentChapter]);
-                const newTokensAdded = makeMermaidCaption(state, index, chapterNumber, currentImageNumberInCurrentChapter, token.info.split(' ')[1]);
+
+                const [_, id, title] = token.info.split(' ');
+                const newTokensAdded = makeMermaidCaption(
+                    state,
+                    index,
+                    chapterNumber,
+                    currentImageNumberInCurrentChapter,
+                    id,
+                    title
+                );
                 index += newTokensAdded;
             }
         }

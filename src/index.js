@@ -1,6 +1,6 @@
 const {testParagraph, endOfTable, makeCaption} = require("./table/table");
 const {makeChapterNumber, makeSectionNumber, makeMinorSectionNumber} = require("./chapter/chapter");
-const {makeMermaidCaption} = require("./mermaid/mermaid");
+const {makeMermaidCaption, fenceMermaid} = require("./mermaid/mermaid");
 const {fencePlantuml} = require("./plantuml/plantuml");
 
 function prepend(currentChapterNumber, currentImageNumberInCurrentChapter, original) {
@@ -299,6 +299,10 @@ module.exports = function markdownItBook(md, options) {
 
         if (token.info.startsWith('plantuml')) {
             return fencePlantuml(tokens, token, index, options, env, slf);
+        }
+
+        if (token.info.startsWith('mermaid')) {
+            return fenceMermaid(tokens, token, index, options, env, slf);
         }
 
         return fence(tokens, index, options, env, slf);

@@ -9,10 +9,16 @@ graph LR
 .
 <p>概念图如下：</p>
 <figure id="fig-0-1">
-<pre><code data-chapter-number="0" data-image-number="1" class="language-mermaid">graph LR
-    C --&gt; B
-</code></pre>
-<figcaption>
+
+      <Suspense>
+      <template #default>
+      <Mermaid id="mermaid-4" class="mermaid" graph="graph%20LR%0A%20%20%20%20C%20--%3E%20B%0A"></Mermaid>
+      </template>
+        <!-- loading state via #fallback slot -->
+        <template #fallback>
+          Loading...
+        </template>
+      </Suspense><figcaption>
 图 0-1</figcaption>
 </figure>
 .
@@ -29,10 +35,41 @@ graph LR
 .
 <p>概念图如下：</p>
 <figure id="test">
-<pre><code data-chapter-number="0" data-image-number="1" class="language-mermaid">graph LR
-    C --&gt; B
-</code></pre>
-<figcaption>
+
+      <Suspense>
+      <template #default>
+      <Mermaid id="mermaid-4" class="mermaid" graph="graph%20LR%0A%20%20%20%20C%20--%3E%20B%0A"></Mermaid>
+      </template>
+        <!-- loading state via #fallback slot -->
+        <template #fallback>
+          Loading...
+        </template>
+      </Suspense><figcaption>
 图 0-1</figcaption>
+</figure>
+.
+
+### Mermaid with id and title
+.
+概念图如下：
+
+```mermaid test title
+graph LR
+    C --> B
+```
+.
+<p>概念图如下：</p>
+<figure id="test">
+
+      <Suspense>
+      <template #default>
+      <Mermaid id="mermaid-4" class="mermaid" graph="graph%20LR%0A%20%20%20%20C%20--%3E%20B%0A"></Mermaid>
+      </template>
+        <!-- loading state via #fallback slot -->
+        <template #fallback>
+          Loading...
+        </template>
+      </Suspense><figcaption>
+图 0-1：title</figcaption>
 </figure>
 .

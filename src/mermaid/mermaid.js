@@ -22,6 +22,28 @@ function makeMermaidCaption(state, index, currentChapterNumber, currentImageNumb
     return 5;
 }
 
+function fenceMermaid(tokens, token, index, options, env, slf) {
+    try {
+        const key = index;
+        const cssClass = 'mermaid';
+        return `
+      <Suspense>
+      <template #default>
+      <Mermaid id="mermaid-${key}" class="${cssClass}" graph="${encodeURIComponent(
+            token.content
+        )}"></Mermaid>
+      </template>
+        <!-- loading state via #fallback slot -->
+        <template #fallback>
+          Loading...
+        </template>
+      </Suspense>`;
+    } catch (err) {
+        return `<pre>${err}</pre>`;
+    }
+}
+
 module.exports = {
-    makeMermaidCaption
+    makeMermaidCaption,
+    fenceMermaid,
 }

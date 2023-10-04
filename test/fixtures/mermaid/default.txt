@@ -18,8 +18,8 @@ graph LR
         <template #fallback>
           Loading...
         </template>
-      </Suspense><figcaption id="fig-0-1-caption">
-图 0-1</figcaption>
+      </Suspense><figcaption>
+<span id="fig-0-1-caption">图 0-1</span></figcaption>
 </figure>
 .
 
@@ -44,8 +44,8 @@ graph LR
         <template #fallback>
           Loading...
         </template>
-      </Suspense><figcaption id="test-caption">
-图 0-1</figcaption>
+      </Suspense><figcaption>
+<span id="test-caption">图 0-1</span></figcaption>
 </figure>
 .
 
@@ -69,7 +69,7 @@ graph LR
         <template #fallback>
           Loading...
         </template>
-      </Suspense><figcaption id="test-caption">
-图 0-1：title</figcaption>
+      </Suspense><figcaption>
+<span id="test-caption">图 0-1</span>title</figcaption>
 </figure>
 .

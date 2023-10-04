@@ -13,16 +13,25 @@ function makeMermaidCaption(state, index, currentChapterNumber, currentImageNumb
 
     const figcaptionOpen = new state.Token('figcaption_open', 'figcaption', 1);
     figcaptionOpen.block = true;
-    figcaptionOpen.attrSet("id", `${id || autoId}-caption`)
+
+    const spanOpen = new state.Token('span_open', 'span', 1);
+    spanOpen.attrSet("id", `${id || autoId}-caption`)
+    spanOpen.block = false;
+
+    const numberOfFigure = new state.Token('text', '', 0);
+    numberOfFigure.block = false;
+    numberOfFigure.content = `图 ${currentChapterNumber}-${currentImageNumberInCurrentChapter}`;
+
+    const spanClose = new state.Token('span_close', 'span', -1);
 
     const figcaption = new state.Token('text', '', 0);
     figcaption.block = true;
+    figcaption.content = !title ? '': title;
 
-    const numberOfFigure = `图 ${currentChapterNumber}-${currentImageNumberInCurrentChapter}`;
-    figcaption.content = !title ? numberOfFigure : `${numberOfFigure}：${title}`;
     const figcaptionEnd = new state.Token('figcaption_close', 'figcaption', -1);
     figcaptionEnd.block = true;
-    state.tokens.splice(index + 2, 0, figcaptionOpen, figcaption, figcaptionEnd);
+
+    state.tokens.splice(index + 2, 0, figcaptionOpen, spanOpen, numberOfFigure, spanClose, figcaption, figcaptionEnd);
 
     return 5;
 }

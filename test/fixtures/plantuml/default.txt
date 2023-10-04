@@ -9,8 +9,8 @@ Alice -> Bob: Hello
 <p>概念图如下：</p>
 <figure id="fig-0-1">
 <img src="https://www.plantuml.com/plantuml/svg/SoWkIImgAStDuNBCoKnELT2rKt3AJx9Iy4ZDoSddSaZDIm7A0G00" alt="plantuml" />
-<figcaption id="fig-0-1-caption">
-图 0-1</figcaption>
+<figcaption>
+<span id="fig-0-1-caption">图 0-1</span></figcaption>
 </figure>
 .
 ### custom id
@@ -24,8 +24,8 @@ Alice -> Bob: Hello
 <p>概念图如下：</p>
 <figure id="test-id">
 <img src="https://www.plantuml.com/plantuml/svg/SoWkIImgAStDuNBCoKnELT2rKt3AJx9Iy4ZDoSddSaZDIm7A0G00" alt="plantuml test-id" />
-<figcaption id="test-id-caption">
-图 0-1</figcaption>
+<figcaption>
+<span id="test-id-caption">图 0-1</span></figcaption>
 </figure>
 .
 ### custom title
@@ -39,7 +39,7 @@ Alice -> Bob: Hello
 <p>概念图如下：</p>
 <figure id="test-id">
 <img src="https://www.plantuml.com/plantuml/svg/SoWkIImgAStDuNBCoKnELT2rKt3AJx9Iy4ZDoSddSaZDIm7A0G00" alt="plantuml test-id test-title" />
-<figcaption id="test-id-caption">
-图 0-1：test-title</figcaption>
+<figcaption>
+<span id="test-id-caption">图 0-1</span>test-title</figcaption>
 </figure>
 .

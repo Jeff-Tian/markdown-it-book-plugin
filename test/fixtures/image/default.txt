@@ -3,7 +3,7 @@
 .
 ![](../../../resources/cypress-in-vpn.png)
 .
-<figure><img src="../../../resources/cypress-in-vpn.png" alt="图 0-1" data-chapter-number="0" data-image-number="1" title="图 0-1"><figcaption>图 0-1</figcaption></figure>
+<figure><img src="../../../resources/cypress-in-vpn.png" alt="" data-chapter-number="0" data-image-number="1"><figcaption><span>图 0-1</span></figcaption></figure>
 .
 
 ### Non Empty alt
@@ -11,5 +11,5 @@
 .
 ![test](../../../resources/cypress-in-vpn.png)
 .
-<figure><img src="../../../resources/cypress-in-vpn.png" alt="test" data-chapter-number="0" data-image-number="1" title="图 0-1：test"><figcaption>图 0-1：test</figcaption></figure>
+<figure><img src="../../../resources/cypress-in-vpn.png" alt="test" data-chapter-number="0" data-image-number="1"><figcaption><span id="test-caption">图 0-1</span>test</figcaption></figure>
 .

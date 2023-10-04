@@ -1,10 +1,18 @@
-const {testParagraph, endOfTable, makeCaption} = require("./table/table");
-const {makeChapterNumber, makeSectionNumber, makeMinorSectionNumber} = require("./chapter/chapter");
-const {makeMermaidCaption, fenceMermaid} = require("./mermaid/mermaid");
-const {fencePlantuml} = require("./plantuml/plantuml");
+const { testParagraph, endOfTable, makeCaption } = require("./table/table");
+const { makeChapterNumber, makeSectionNumber, makeMinorSectionNumber } = require("./chapter/chapter");
+const { makeMermaidCaption, fenceMermaid } = require("./mermaid/mermaid");
+const { fencePlantuml } = require("./plantuml/plantuml");
 
-function prepend(currentChapterNumber, currentImageNumberInCurrentChapter, original) {
-    return `图 ${currentChapterNumber}-${currentImageNumberInCurrentChapter}` + (original !== '' ? ('：' + original) : '');
+function prepend(currentChapterNumber, currentImageNumberInCurrentChapter, id, contextTokens, state) {
+    const spanOpen = new state.Token('span_open', 'span', 1);
+    if (id) {
+        spanOpen.attrSet('id', id + '-caption');
+    }
+    const numberOfImage = new state.Token('text', '', 0);
+    numberOfImage.block = false;
+    numberOfImage.content = `图 ${currentChapterNumber}-${currentImageNumberInCurrentChapter}`;
+    const spanClose = new state.Token('span_close', 'span', -1);
+    contextTokens.splice(0, 0, spanOpen, numberOfImage, spanClose);
 }
 
 module.exports = function markdownItBook(md, options) {
@@ -38,23 +46,18 @@ module.exports = function markdownItBook(md, options) {
                         childToken.attrPush(['data-chapter-number', chapterNumber]);
                         childToken.attrPush(['data-image-number', currentImageNumberInCurrentChapter]);
 
-                        const modifiedAlt = prepend(chapterNumber, currentImageNumberInCurrentChapter, childToken.content);
-
-                        childToken.attrSet('title', prepend(chapterNumber, currentImageNumberInCurrentChapter, childToken.attrGet('title') || childToken.content));
-
                         if (!childToken.content) {
-                            childToken.attrSet('alt', modifiedAlt);
-                            childToken.content = modifiedAlt;
+                            prepend(currentChapterNumber, currentImageNumberInCurrentChapter, childToken.attrGet('id') || childToken.attrGet('alt'), childToken.children, state);
                         } else {
                             childToken.attrSet('alt', childToken.content);
                         }
 
                         if (childToken.children && childToken.children.length > 0 && childToken.children[0].type === 'text') {
-                            childToken.children[0].content = prepend(chapterNumber, currentImageNumberInCurrentChapter, childToken.children[0].content);
+                            prepend(chapterNumber, currentImageNumberInCurrentChapter, childToken.attrGet('id') || childToken.attrGet('alt'), childToken.children, state);
                         }
 
                         if (childToken.children && childToken.children.length <= 0) {
-                            childToken.children = [{type: 'text', content: modifiedAlt}]
+                            prepend(currentChapterNumber, currentImageNumberInCurrentChapter, childToken.attrGet('id') || childToken.attrGet('alt'), childToken.children, state);
                         }
                     }
                 }
@@ -132,7 +135,7 @@ module.exports = function markdownItBook(md, options) {
                         } else {
                             // for no caption, insert one
                             state.tokens.splice(start + 1, 0,
-                                {content: '', nesting: 1, block: true},
+                                { content: '', nesting: 1, block: true },
                                 {
                                     content: '',
                                     nesting: 0,
@@ -155,7 +158,7 @@ module.exports = function markdownItBook(md, options) {
                     } else {
                         // for no caption, insert one
                         state.tokens.splice(1, 0,
-                            {content: '', nesting: 1, block: true},
+                            { content: '', nesting: 1, block: true },
                             {
                                 content: '',
                                 nesting: 0,

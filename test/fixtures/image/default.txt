@@ -13,3 +13,10 @@
 .
 <figure><img src="../../../resources/cypress-in-vpn.png" alt="test" data-chapter-number="0" data-image-number="1"><figcaption><span id="test-caption">图 0-1</span>test</figcaption></figure>
 .
+
+### alt and title
+.
+![to-d-business](../../resources/mermaid-diagram-2023-01-26-135342.png "微信的 2D 业务")
+.
+<figure><img src="../../resources/mermaid-diagram-2023-01-26-135342.png" alt="to-d-business" title="微信的 2D 业务" data-chapter-number="0" data-image-number="1"><figcaption><span id="to-d-business-caption">图 0-1</span>微信的 2D 业务</figcaption></figure>
+.

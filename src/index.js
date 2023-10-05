@@ -3,7 +3,7 @@ const { makeChapterNumber, makeSectionNumber, makeMinorSectionNumber } = require
 const { makeMermaidCaption, fenceMermaid } = require("./mermaid/mermaid");
 const { fencePlantuml } = require("./plantuml/plantuml");
 
-function prepend(currentChapterNumber, currentImageNumberInCurrentChapter, id, contextTokens, state) {
+function prependSpanInsideFigCaption(currentChapterNumber, currentImageNumberInCurrentChapter, id, contextTokens, state) {
     const spanOpen = new state.Token('span_open', 'span', 1);
     if (id) {
         spanOpen.attrSet('id', id + '-caption');
@@ -15,7 +15,7 @@ function prepend(currentChapterNumber, currentImageNumberInCurrentChapter, id, c
     contextTokens.splice(0, 0, spanOpen, numberOfImage, spanClose);
 }
 
-module.exports = function markdownItBook(md, options) {
+module.exports = (md, options) => {
     const mainCounterTag = options?.mainCounterTag || 'h2';
     const sectionCounterTag = options?.sectionCounterTag;
     const minorSectionCounterTag = options?.minorSectionCounterTag;
@@ -47,17 +47,24 @@ module.exports = function markdownItBook(md, options) {
                         childToken.attrPush(['data-image-number', currentImageNumberInCurrentChapter]);
 
                         if (!childToken.content) {
-                            prepend(currentChapterNumber, currentImageNumberInCurrentChapter, childToken.attrGet('id') || childToken.attrGet('alt'), childToken.children, state);
+                            prependSpanInsideFigCaption(currentChapterNumber, currentImageNumberInCurrentChapter, childToken.attrGet('id') || childToken.attrGet('alt'), childToken.children, state);
                         } else {
                             childToken.attrSet('alt', childToken.content);
                         }
 
+                        if (!!childToken.attrGet('title') && childToken.content !== childToken.attrGet('title')) {
+                            childToken.content = childToken.attrGet('title');
+                        }
+
                         if (childToken.children && childToken.children.length > 0 && childToken.children[0].type === 'text') {
-                            prepend(chapterNumber, currentImageNumberInCurrentChapter, childToken.attrGet('id') || childToken.attrGet('alt'), childToken.children, state);
+                            if (!!childToken.attrGet('title') && childToken.children[0].content !== childToken.attrGet('title')) {
+                                childToken.children[0].content = childToken.attrGet('title');
+                            }
+                            prependSpanInsideFigCaption(chapterNumber, currentImageNumberInCurrentChapter, childToken.attrGet('id') || childToken.attrGet('alt'), childToken.children, state);
                         }
 
                         if (childToken.children && childToken.children.length <= 0) {
-                            prepend(currentChapterNumber, currentImageNumberInCurrentChapter, childToken.attrGet('id') || childToken.attrGet('alt'), childToken.children, state);
+                            prependSpanInsideFigCaption(currentChapterNumber, currentImageNumberInCurrentChapter, childToken.attrGet('id') || childToken.attrGet('alt'), childToken.children, state);
                         }
                     }
                 }

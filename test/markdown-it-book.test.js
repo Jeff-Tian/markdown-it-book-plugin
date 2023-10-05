@@ -97,10 +97,10 @@ describe('markdown-it-book', () => {
   `;
 
                 const expectedOutput = `<h2>Chapter 1</h2>
-<figure><img src="image1.png" alt="力" title="地" data-chapter-number="1" data-image-number="1"><figcaption><span id="力-caption">图 1-1</span>力</figcaption></figure>
-<figure><img src="image2.png" alt="工" title="土" data-chapter-number="1" data-image-number="2"><figcaption><span id="工-caption">图 1-2</span>工</figcaption></figure>
+<figure><img src="image1.png" alt="力" title="地" data-chapter-number="1" data-image-number="1"><figcaption><span id="力-caption">图 1-1</span>地</figcaption></figure>
+<figure><img src="image2.png" alt="工" title="土" data-chapter-number="1" data-image-number="2"><figcaption><span id="工-caption">图 1-2</span>土</figcaption></figure>
 <h2>Chapter 2</h2>
-<figure><img src="image3.png" alt="要" title="国" data-chapter-number="2" data-image-number="1"><figcaption><span id="要-caption">图 2-1</span>要</figcaption></figure>
+<figure><img src="image3.png" alt="要" title="国" data-chapter-number="2" data-image-number="1"><figcaption><span id="要-caption">图 2-1</span>国</figcaption></figure>
 `;
 
                 md.use(require('@jeff-tian/markdown-it-implicit-figures'), {
@@ -130,10 +130,10 @@ describe('markdown-it-book', () => {
   `;
 
                 const expectedOutput = `<h3>Chapter 1</h3>
-<figure><img src="image1.png" alt="力" title="地" data-chapter-number="1" data-image-number="1"><figcaption><span id="力-caption">图 1-1</span>力</figcaption></figure>
-<figure><img src="image2.png" alt="工" title="土" data-chapter-number="1" data-image-number="2"><figcaption><span id="工-caption">图 1-2</span>工</figcaption></figure>
+<figure><img src="image1.png" alt="力" title="地" data-chapter-number="1" data-image-number="1"><figcaption><span id="力-caption">图 1-1</span>地</figcaption></figure>
+<figure><img src="image2.png" alt="工" title="土" data-chapter-number="1" data-image-number="2"><figcaption><span id="工-caption">图 1-2</span>土</figcaption></figure>
 <h3>Chapter 2</h3>
-<figure><img src="image3.png" alt="要" title="国" data-chapter-number="2" data-image-number="1"><figcaption><span id="要-caption">图 2-1</span>要</figcaption></figure>
+<figure><img src="image3.png" alt="要" title="国" data-chapter-number="2" data-image-number="1"><figcaption><span id="要-caption">图 2-1</span>国</figcaption></figure>
 `;
 
                 md.use(require('@jeff-tian/markdown-it-implicit-figures'), {

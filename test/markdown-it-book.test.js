@@ -155,7 +155,9 @@ describe('markdown-it-book', () => {
     })
 
     describe('table', () => {
-        generate(path.join(__dirname, 'fixtures/table/default.txt'), md);
+        generate(path.join(__dirname, 'fixtures/table/default.txt'), new MarkdownIt({
+            html: true,
+        }).use(markdownItBook));
     })
 
     describe('chapter', () => {

@@ -36,8 +36,22 @@ function makeCaption(state, start, end, currentChapterNumber, currentNumberInCur
     inl.children = [spanOpen, text, spanClose, ...inl.children]
 }
 
+function makeCaptionForRawTable(state, start, end, currentChapterNumber, currentNumberInCurrentChapter, htmlBlock) {
+    const text = new state.Token('text', '', 0)
+    text.content = `表 ${currentChapterNumber}-${currentNumberInCurrentChapter}`
+
+    const inl = state.tokens[start + 1]
+    const captionContent = inl.content.replace(rex, '');
+    const id = (captionContent || text.content).replace(/\s/g, '-').toLowerCase();
+    inl.content = '';
+
+    const split = htmlBlock.content.split('<table>')
+    htmlBlock.content = '<table>' + `<caption><span id="${id}-caption">${text.content}</span>${captionContent}</caption>` + split[1];
+}
+
 module.exports = {
     testParagraph,
     endOfTable,
-    makeCaption
+    makeCaption,
+    makeCaptionForRawTable
 }

@@ -80,3 +80,34 @@ Other staff
 </table>
 <p>Other staff</p>
 .
+### raw table
+.
+Table: test-table
+
+<table>
+<thead>
+<tr>
+<td>A</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+.
+<p></p>
+<table><caption><span id="test-table-caption">表 1-1</span>test-table</caption>
+<thead>
+<tr>
+<td>A</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+.

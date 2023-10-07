@@ -123,8 +123,8 @@ module.exports = (md, options) => {
                             const chapterNumber = typeof updateMainCounter === 'boolean' ? currentChapterNumber : counters[currentChapterNumber - 2];
 
                             makeCaption(state, start, end, chapterNumber, currentNumberInCurrentChapter)
-                            const slice = state.tokens.splice(start, end + 1 - start)
-                            state.tokens.splice(start + 1, 0, ...slice)
+                            const deleted = state.tokens.splice(start, end + 1 - start)
+                            state.tokens.splice(start + 1, 0, ...deleted)
                         }
                     }
                 } else if (end = endOfTable(state, start)) { // test for caption after table
@@ -137,8 +137,8 @@ module.exports = (md, options) => {
                         if (captionEnd) {
 
                             makeCaption(state, end + 1, captionEnd, chapterNumber, currentNumberInCurrentChapter)
-                            const slice = state.tokens.splice(end + 1, captionEnd - end)
-                            state.tokens.splice(start + 1, 0, ...slice)
+                            const deleted = state.tokens.splice(end + 1, captionEnd - end)
+                            state.tokens.splice(start + 1, 0, ...deleted)
                         } else {
                             // for no caption, insert one
                             state.tokens.splice(start + 1, 0,

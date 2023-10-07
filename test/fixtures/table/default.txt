@@ -7,7 +7,7 @@ simple caption below
 Table: some caption
 .
 <table>
-<caption>表 1-1：some caption</caption>
+<caption><span id="some-caption-caption">表 1-1</span>some caption</caption>
 <thead>
 <tr>
 <th>A</th>
@@ -32,7 +32,7 @@ no caption
 | 1 | 2 | 3 |
 .
 <table>
-<caption>表 1-1</caption>
+<caption><span id="表-1-1-caption">表 1-1</span></caption>
 <thead>
 <tr>
 <th>A</th>
@@ -62,7 +62,7 @@ Other staff
 .
 <h3>Some staff</h3>
 <table>
-<caption>表 1-1</caption>
+<caption><span id="表-1-1-caption">表 1-1</span></caption>
 <thead>
 <tr>
 <th>A</th>

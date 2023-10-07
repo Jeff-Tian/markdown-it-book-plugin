@@ -15,13 +15,25 @@ function endOfTable(state, i) {
 }
 
 function makeCaption(state, start, end, currentChapterNumber, currentNumberInCurrentChapter) {
+    const text = new state.Token('text', '', 0)
+    text.content = `表 ${currentChapterNumber}-${currentNumberInCurrentChapter}`
+
     const inl = state.tokens[start + 1]
     const captionContent = inl.content.replace(rex, '');
-    inl.content = `表 ${currentChapterNumber}-${currentNumberInCurrentChapter}${captionContent !== '' ? '：' : ''}${captionContent}`
+    const id = (captionContent || text.content).replace(/\s/g, '-').toLowerCase();
+
+    inl.content = captionContent;
+
     state.tokens[start].tag = 'caption'
     state.tokens[start].type = 'caption_open'
     state.tokens[end].tag = 'caption'
     state.tokens[end].type = 'caption_close'
+
+    const spanOpen = new state.Token('span_open', 'span', 1)
+    spanOpen.attrPush(['id', id + '-caption'])
+    const spanClose = new state.Token('span_close', 'span', -1)
+
+    inl.children = [spanOpen, text, spanClose, ...inl.children]
 }
 
 module.exports = {

@@ -20,3 +20,10 @@
 .
 <figure><img src="../../resources/mermaid-diagram-2023-01-26-135342.png" alt="to-d-business" title="微信的 2D 业务" data-chapter-number="0" data-image-number="1"><figcaption><span id="to-d-business-caption">图 0-1</span>微信的 2D 业务</figcaption></figure>
 .
+### raw image
+.
+<img src="../../../resources/cypress-in-vpn.png" alt="id-test" title="title">
+.
+<figure><img data-chapter-number="0" data-image-number="1" src="../../../resources/cypress-in-vpn.png" alt="id-test" title="title">
+<figcaption><span id="id-test-caption">图 0-1</span>title</figcaption></figure>
+.

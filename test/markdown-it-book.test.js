@@ -146,7 +146,9 @@ describe('markdown-it-book', () => {
 
         generate(
             path.join(__dirname, 'fixtures/image/default.txt'),
-            new MarkdownIt()
+            new MarkdownIt({
+                html: true
+            })
                 .use(markdownItBook, {})
                 .use(require('@jeff-tian/markdown-it-implicit-figures'), {
                     figcaption: true

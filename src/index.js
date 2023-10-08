@@ -86,6 +86,10 @@ module.exports = (md, options) => {
                     title
                 );
                 index += newTokensAdded;
+            } else if (token.type === 'html_block' && token.content.startsWith('<img')) {
+                currentImageNumberInCurrentChapter++;
+
+                token.content = `<figure>${token.content.replace(/<img/, `<img data-chapter-number="${currentChapterNumber}" data-image-number="${currentImageNumberInCurrentChapter}"`)}<figcaption><span id="id-test-caption">图 ${currentChapterNumber}-${currentImageNumberInCurrentChapter}</span>title</figcaption></figure>\n`;
             }
         }
     });

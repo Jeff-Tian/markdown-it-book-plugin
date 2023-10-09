@@ -21,6 +21,7 @@ module.exports = (md, options) => {
     const minorSectionCounterTag = options?.minorSectionCounterTag;
     const updateMainCounter = options?.updateMainCounter || false;
     const inlineListNumbering = options?.inlineListNumbering || false;
+    const replaceImagePath = options?.replaceImagePath ? options?.replaceImagePath : x => x;
 
     // 给图片编号
     md.core.ruler.before('linkify', 'update_chapter_and_image_numbers', function (state) {
@@ -88,8 +89,12 @@ module.exports = (md, options) => {
                 index += newTokensAdded;
             } else if (token.type === 'html_block' && token.content.startsWith('<img')) {
                 currentImageNumberInCurrentChapter++;
+                const numbering = `图 ${currentChapterNumber}-${currentImageNumberInCurrentChapter}`;
 
-                token.content = `<figure>${token.content.replace(/<img/, `<img data-chapter-number="${currentChapterNumber}" data-image-number="${currentImageNumberInCurrentChapter}"`)}<figcaption><span id="id-test-caption">图 ${currentChapterNumber}-${currentImageNumberInCurrentChapter}</span>title</figcaption></figure>\n`;
+                const alt = token.content.match(/alt="([^"]+)"/);
+                const id = alt ? alt[1] : numbering;
+
+                token.content = `<figure>${token.content.replace(/<img/, `<img data-chapter-number="${currentChapterNumber}" data-image-number="${currentImageNumberInCurrentChapter}"`).replace(/src="([^"]+)"/g, replaceImagePath)}<figcaption><span id="${id}-caption">${numbering}</span>title</figcaption></figure>\n`;
             }
         }
     });

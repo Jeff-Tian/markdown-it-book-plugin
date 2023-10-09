@@ -154,6 +154,21 @@ describe('markdown-it-book', () => {
                     figcaption: true
                 })
         );
+
+        describe('replace image path', () => {
+            test('should replace image path', () => {
+                const inputMarkdown = `<img src="to-be-replace.png" alt="hello"/>`;
+                const expectedOutput = `<figure><img data-chapter-number="0" data-image-number="1" src="replaced.png" alt="hello"/><figcaption><span id="hello-caption">图 0-1</span>title</figcaption></figure>\n`;
+                const md = new MarkdownIt({
+                    html: true,
+                }).use(markdownItBook, {
+                    replaceImagePath: (match, p1) => {
+                        return `src="${p1.replace('to-be-replace', 'replaced')}"`;
+                    }
+                });
+                expect(md.render(inputMarkdown)).toBe(expectedOutput);
+            })
+        })
     })
 
     describe('table', () => {

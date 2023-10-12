@@ -1,7 +1,7 @@
-const {testParagraph, endOfTable, makeCaption, makeCaptionForRawTable} = require("./table/table");
-const {makeChapterNumber, makeSectionNumber, makeMinorSectionNumber} = require("./chapter/chapter");
-const {makeMermaidCaption, fenceMermaid} = require("./mermaid/mermaid");
-const {fencePlantuml} = require("./plantuml/plantuml");
+const { testParagraph, endOfTable, makeCaption, makeCaptionForRawTable } = require("./table/table");
+const { makeChapterNumber, makeSectionNumber, makeMinorSectionNumber } = require("./chapter/chapter");
+const { makeMermaidCaption, fenceMermaid } = require("./mermaid/mermaid");
+const { fencePlantuml } = require("./plantuml/plantuml");
 
 function prependSpanInsideFigCaption(currentChapterNumber, currentImageNumberInCurrentChapter, id, contextTokens, state) {
     const spanOpen = new state.Token('span_open', 'span', 1);
@@ -67,6 +67,8 @@ module.exports = (md, options) => {
                         if (childToken.children && childToken.children.length <= 0) {
                             prependSpanInsideFigCaption(currentChapterNumber, currentImageNumberInCurrentChapter, childToken.attrGet('id') || childToken.attrGet('alt'), childToken.children, state);
                         }
+                    } else if (token.type === 'inline' && token.content.startsWith('<img ') && token.children[0].type === 'html_inline') {
+                        token.children[0].content = token.children[0].content.replace(/src="([^"]+)"/g, replaceImagePath)
                     }
                 }
             } else if (token.type === 'fence' && (token.info.startsWith('mermaid') || token.info.startsWith('plantuml'))) {
@@ -156,7 +158,7 @@ module.exports = (md, options) => {
                         } else {
                             // for no caption, insert one
                             state.tokens.splice(start + 1, 0,
-                                {content: '', nesting: 1, block: true},
+                                { content: '', nesting: 1, block: true },
                                 {
                                     content: '',
                                     nesting: 0,
@@ -179,7 +181,7 @@ module.exports = (md, options) => {
                     } else {
                         // for no caption, insert one
                         state.tokens.splice(1, 0,
-                            {content: '', nesting: 1, block: true},
+                            { content: '', nesting: 1, block: true },
                             {
                                 content: '',
                                 nesting: 0,

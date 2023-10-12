@@ -11,7 +11,7 @@ describe('markdown-it-book', () => {
     describe('image', () => {
         describe('update or append chapter and image numbers', () => {
 
-// Test case 1: Test if chapter and image numbers are updated correctly
+            // Test case 1: Test if chapter and image numbers are updated correctly
             test('should update chapter and image numbers', () => {
                 const inputMarkdown = `
 ## Chapter 1
@@ -144,16 +144,22 @@ describe('markdown-it-book', () => {
             });
         });
 
-        generate(
-            path.join(__dirname, 'fixtures/image/default.txt'),
-            new MarkdownIt({
-                html: true
-            })
-                .use(markdownItBook, {})
-                .use(require('@jeff-tian/markdown-it-implicit-figures'), {
-                    figcaption: true
+        describe('auto generated image testing', () => {
+            generate(
+                path.join(__dirname, 'fixtures/image/default.txt'),
+                new MarkdownIt({
+                    html: true
                 })
-        );
+                    .use(markdownItBook, {
+                        replaceImagePath: (match, p1) => {
+                            return `src="${p1.replace('to-be-replace', 'replaced')}"`;
+                        }
+                    })
+                    .use(require('@jeff-tian/markdown-it-implicit-figures'), {
+                        figcaption: true
+                    })
+            );
+        });
 
         describe('replace image path', () => {
             test('should replace image path', () => {
@@ -185,7 +191,7 @@ describe('markdown-it-book', () => {
 
         generate(path.join(__dirname, 'fixtures/chapter/advanced.txt'), new MarkdownIt().use(markdownItBook, {
             mainCounterTag: 'h3',
-            updateMainCounter: ['', ...Array.from({length: 100}, (_, index) => index + 1)],
+            updateMainCounter: ['', ...Array.from({ length: 100 }, (_, index) => index + 1)],
         }));
     })
 

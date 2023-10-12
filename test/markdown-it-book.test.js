@@ -164,7 +164,7 @@ describe('markdown-it-book', () => {
         describe('replace image path', () => {
             test('should replace image path', () => {
                 const inputMarkdown = `<img src="to-be-replace.png" alt="hello"/>`;
-                const expectedOutput = `<figure><img data-chapter-number="0" data-image-number="1" src="replaced.png" alt="hello"/><figcaption><span id="hello-caption">图 0-1</span>title</figcaption></figure>\n`;
+                const expectedOutput = `<figure><img data-chapter-number="0" data-image-number="1" src="replaced.png" alt="hello"/><figcaption><span id="hello-caption">图 0-1</span></figcaption></figure>\n`;
                 const md = new MarkdownIt({
                     html: true,
                 }).use(markdownItBook, {

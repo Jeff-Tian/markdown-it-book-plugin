@@ -94,9 +94,10 @@ module.exports = (md, options) => {
                 const numbering = `图 ${currentChapterNumber}-${currentImageNumberInCurrentChapter}`;
 
                 const alt = token.content.match(/alt="([^"]+)"/);
+                const title = token.content.match(/title="([^"]+)"/);
                 const id = alt ? alt[1] : numbering;
 
-                token.content = `<figure>${token.content.replace(/<img/, `<img data-chapter-number="${currentChapterNumber}" data-image-number="${currentImageNumberInCurrentChapter}"`).replace(/src="([^"]+)"/g, replaceImagePath)}<figcaption><span id="${id}-caption">${numbering}</span>title</figcaption></figure>\n`;
+                token.content = `<figure>${token.content.replace(/<img/, `<img data-chapter-number="${currentChapterNumber}" data-image-number="${currentImageNumberInCurrentChapter}"`).replace(/src="([^"]+)"/g, replaceImagePath)}<figcaption><span id="${id}-caption">${numbering}</span>${title ? title[1] : ''}</figcaption></figure>\n`;
             }
         }
     });

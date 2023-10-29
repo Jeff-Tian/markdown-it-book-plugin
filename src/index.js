@@ -334,4 +334,20 @@ module.exports = (md, options) => {
 
         return fence(tokens, index, options, env, slf);
     };
+
+    if (options?.wordCount) {
+        const defaultParagraphOpen = md.renderer.rules.paragraph_open || function (tokens, idx, options, env, self) {
+            return self.renderToken(tokens, idx, options);
+        };
+
+        md.renderer.rules.paragraph_open = function (tokens, idx, options, env, self) {
+            const token = tokens[idx];
+            const wordCount = token.content.split(/\s+/).length;
+
+            token.attrPush(['data-word-count', wordCount]);
+
+            return defaultParagraphOpen(tokens, idx, options, env, self);
+        };
+
+    }
 };

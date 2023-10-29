@@ -235,4 +235,15 @@ describe('markdown-it-book', () => {
             inlineListNumbering: '参考书目'
         }));
     })
+
+    describe('word count', () => {
+        test('word count', () => {
+            const input = 'hello world';
+            const expectedOutput = '<p>hello world</p>\n<p>Word count: 2</p>\n';
+
+            expect(md.render(input, {
+                wordCount: true
+            })).toBe(expectedOutput);
+        })
+    })
 })

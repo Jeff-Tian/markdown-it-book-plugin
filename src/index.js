@@ -1,7 +1,7 @@
-const { testParagraph, endOfTable, makeCaption, makeCaptionForRawTable } = require("./table/table");
-const { makeChapterNumber, makeSectionNumber, makeMinorSectionNumber } = require("./chapter/chapter");
-const { makeMermaidCaption, fenceMermaid } = require("./mermaid/mermaid");
-const { fencePlantuml } = require("./plantuml/plantuml");
+const {testParagraph, endOfTable, makeCaption, makeCaptionForRawTable} = require("./table/table");
+const {makeChapterNumber, makeSectionNumber, makeMinorSectionNumber} = require("./chapter/chapter");
+const {makeMermaidCaption, fenceMermaid} = require("./mermaid/mermaid");
+const {fencePlantuml} = require("./plantuml/plantuml");
 
 function prependSpanInsideFigCaption(currentChapterNumber, currentImageNumberInCurrentChapter, id, contextTokens, state) {
     const spanOpen = new state.Token('span_open', 'span', 1);
@@ -159,7 +159,7 @@ module.exports = (md, options) => {
                         } else {
                             // for no caption, insert one
                             state.tokens.splice(start + 1, 0,
-                                { content: '', nesting: 1, block: true },
+                                {content: '', nesting: 1, block: true},
                                 {
                                     content: '',
                                     nesting: 0,
@@ -182,7 +182,7 @@ module.exports = (md, options) => {
                     } else {
                         // for no caption, insert one
                         state.tokens.splice(1, 0,
-                            { content: '', nesting: 1, block: true },
+                            {content: '', nesting: 1, block: true},
                             {
                                 content: '',
                                 nesting: 0,
@@ -336,18 +336,26 @@ module.exports = (md, options) => {
     };
 
     if (options?.wordCount) {
-        const defaultParagraphOpen = md.renderer.rules.paragraph_open || function (tokens, idx, options, env, self) {
-            return self.renderToken(tokens, idx, options);
-        };
+        let charCount = 0;
 
-        md.renderer.rules.paragraph_open = function (tokens, idx, options, env, self) {
-            const token = tokens[idx];
-            const wordCount = token.content.split(/\s+/).length;
+        md.core.ruler.push('word_count', (state) => {
+            if (state.src) {
+                const text = state.src.replace(/<[^>]+>/g, '').replace(/[#*`]/g, '');
+                charCount += text.split(/\s+/).filter(x => x.length > 0).length;
+            }
+            return true;
+        })
 
-            token.attrPush(['data-word-count', wordCount]);
+        md.core.ruler.push('word_count_result', (state) => {
+            const result = `Total words: ${charCount}`;
 
-            return defaultParagraphOpen(tokens, idx, options, env, self);
-        };
+            state.tokens.push(new state.Token('word_count', 'p', 1));
+            const token = new state.Token('text', '', 0);
+            token.content = result;
+            state.tokens.push(token);
+            state.tokens.push(new state.Token('word_count', 'p', -1));
 
+            return true;
+        })
     }
 };

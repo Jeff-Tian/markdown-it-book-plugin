@@ -191,7 +191,7 @@ describe('markdown-it-book', () => {
 
         generate(path.join(__dirname, 'fixtures/chapter/advanced.txt'), new MarkdownIt().use(markdownItBook, {
             mainCounterTag: 'h3',
-            updateMainCounter: ['', ...Array.from({ length: 100 }, (_, index) => index + 1)],
+            updateMainCounter: ['', ...Array.from({length: 100}, (_, index) => index + 1)],
         }));
     })
 
@@ -237,13 +237,13 @@ describe('markdown-it-book', () => {
     })
 
     describe('word count', () => {
-        test('word count', () => {
-            const input = 'hello world';
-            const expectedOutput = '<p>hello world</p>\n<p>Word count: 2</p>\n';
+        test('count English words', () => {
+            const input = 'hello world!';
+            const expectedOutput = '<p>hello world!</p>\n<p>Total words: 2</p>';
 
-            expect(md.render(input, {
+            expect(new MarkdownIt().use(markdownItBook, {
                 wordCount: true
-            })).toBe(expectedOutput);
+            }).render(input)).toBe(expectedOutput);
         })
     })
 })

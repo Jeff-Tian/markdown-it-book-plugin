@@ -1,7 +1,7 @@
 const englishWords = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
 module.exports = s => {
-    s = s.replace('！', '').replace('!', '')
+    s = s.replace(/[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~！￥……（）—【】‘；：”“'。，、？《》]/g, '')
 
     let count = 0;
     let englishMode = false;

@@ -2,6 +2,7 @@ const {testParagraph, endOfTable, makeCaption, makeCaptionForRawTable} = require
 const {makeChapterNumber, makeSectionNumber, makeMinorSectionNumber} = require("./chapter/chapter");
 const {makeMermaidCaption, fenceMermaid} = require("./mermaid/mermaid");
 const {fencePlantuml} = require("./plantuml/plantuml");
+const wordCount = require('./word-count');
 
 function prependSpanInsideFigCaption(currentChapterNumber, currentImageNumberInCurrentChapter, id, contextTokens, state) {
     const spanOpen = new state.Token('span_open', 'span', 1);
@@ -341,7 +342,9 @@ module.exports = (md, options) => {
         md.core.ruler.push('word_count', (state) => {
             if (state.src) {
                 const text = state.src.replace(/<[^>]+>/g, '').replace(/[#*`]/g, '');
-                charCount += text.split(/\s+/).filter(x => x.length > 0).length;
+                charCount += text.split(/\s+/).filter(x => x.length > 0).reduce((prev, current) => {
+                    return prev + wordCount(current);
+                }, 0)
             }
             return true;
         })

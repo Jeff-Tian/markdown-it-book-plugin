@@ -245,5 +245,14 @@ describe('markdown-it-book', () => {
                 wordCount: true
             }).render(input)).toBe(expectedOutput);
         })
+
+        test('count Chinese words', () => {
+            const input = '你好世界！';
+            const expectedOutput = '<p>你好世界！</p>\n<p>Total words: 4</p>';
+
+            expect(new MarkdownIt().use(markdownItBook, {
+                wordCount: true
+            }).render(input)).toBe(expectedOutput);
+        })
     })
 })

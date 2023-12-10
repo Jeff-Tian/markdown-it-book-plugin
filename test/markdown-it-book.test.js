@@ -254,5 +254,22 @@ describe('markdown-it-book', () => {
                 wordCount: true
             }).render(input)).toBe(expectedOutput);
         })
+
+        test('count words only append to the end of the document', () => {
+            const input = `你好世界！
+            
+            ::: tip
+            这是一段小提示
+            :::
+            `;
+            const expectedOutput = '<p>你好世界！</p>\n' +
+                '<pre><code>        ::: tip\n' +
+                '        这是一段小提示\n' +
+                '        :::\n</code></pre>\n<p>Total words: 12</p>';
+
+            expect(new MarkdownIt().use(markdownItBook, {
+                wordCount: true
+            }).render(input)).toBe(expectedOutput);
+        })
     })
 })

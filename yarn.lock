@@ -372,10 +372,10 @@
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.3.tgz#e45e384e4b8ec16bce2fd903af78450f6bf7ec98"
   integrity sha512-ZXRY4jNvVgSVQ8DL3LTcakaAtXwTVUxE81hslsyD2AtoXW/wVob10HkOJ1X/pAlcI7D+2YoZKg5do8G/w6RYgA==
 
-"@jeff-tian/markdown-it-implicit-figures@^0.12.0":
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/@jeff-tian/markdown-it-implicit-figures/-/markdown-it-implicit-figures-0.12.0.tgz#158fe085ee0957a9ba5290492c3617a488faf509"
-  integrity sha512-Z0FJyCneb3CB0adpx9EfHDhvbwy1uwuc2h54LE6/X63mOH/dAgWEjMIN5519SurdPGWTvaakih0dwsvkNstO6g==
+"@jeff-tian/markdown-it-implicit-figures@0.14.2":
+  version "0.14.2"
+  resolved "https://registry.yarnpkg.com/@jeff-tian/markdown-it-implicit-figures/-/markdown-it-implicit-figures-0.14.2.tgz#6dbef3fa7e139c99ea1dba8499e5474cf7cc2f75"
+  integrity sha512-0jKB0CcUXpQ1q4VvZesK8Q/UkIwCe859byzMavapgdFjWdpIMRqTPBeLSIrEm8PB9eHvuOj/FQbwIOiQcymt7A==
 
 "@jest/console@^29.6.1":
   version "29.6.1"
